@@ -79,12 +79,12 @@ class Inventory():
         for query in query_list:
 
             for entry in selection:
-                
+
                 value = entry.get(query)
 
                 if value:
 
-
+                    pass
 
                 else:
 
