@@ -63,18 +63,28 @@ class Inventory():
 
     def new_record(self, new_entry):
 
-        with open(self.inventory_dir, 'w') as inventory:
+        status, invalid_fields = self.check_for_valid_fields(new_entry)
 
-            inventory.writelines(new_entry)
+        if status:
+
+            with open(self.inventory_dir, 'w') as inventory:
+
+                inventory.writelines(new_entry)
+
+        else:
+
+            print 'Invalid entry fields: {0}'.format(str(invalid_fields))
 
     def retrieve_records(self, user_query):
 
-        selection = self.query_selection(user_query)
+        results = self.query_selection(user_query)
 
+        print results
 
     def query_selection(self, query_list):
 
         selection = self.fetch_db()
+        results = []
 
         for query in query_list:
 
@@ -84,7 +94,9 @@ class Inventory():
 
                 if value:
 
-                    pass
+                    if entry[query] == query_list[query]:
+
+                        results.append(entry)
 
                 else:
 
@@ -97,9 +109,7 @@ class Inventory():
 
                     break
 
-
-
-        return selection
+        return results
 
     def modify_record(self):
 
