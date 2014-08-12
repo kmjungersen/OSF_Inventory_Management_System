@@ -63,17 +63,25 @@ class Inventory():
 
     def new_record(self, new_entry):
 
-        status, invalid_fields = self.check_for_valid_fields(new_entry)
+        fields_are_valid, invalid_fields = self.check_for_valid_fields(new_entry)
 
-        if status:
+        if fields_are_valid:
+
+            new_line = str(new_entry)
 
             with open(self.inventory_dir, 'w') as inventory:
 
-                inventory.writelines(new_entry)
+                inventory.seek(2)
+
+                inventory.writelines(new_line)
+
+            status = 'Record successfully added.'
 
         else:
 
-            print 'Invalid entry fields: {0}'.format(str(invalid_fields))
+            status = 'Invalid entry fields: {0}'.format(str(invalid_fields))
+
+        return status
 
     def retrieve_records(self, user_query):
 
@@ -102,7 +110,6 @@ class Inventory():
 
                     selection.remove(entry)
 
-
                 if selection.__len__() == 0:
 
                     found_entry = False
@@ -112,6 +119,10 @@ class Inventory():
         return results
 
     def modify_record(self):
+
+        pass
+
+    def log_transaction(self):
 
         pass
 
@@ -153,12 +164,13 @@ if __name__ == '__main__':
     foo = Inventory()
 
     some_dict = {
-        'shelf': 345,
-        'room': 'fooooo',
-        'foo': 'bar',
+        'shelf': 5467,
+        'room': 'foo',
+        # 'foo': 'bar',
+        # 'baz': 'asdfa',
     }
 
-    foo.check_for_valid_fields(some_dict)
+    print foo.new_record(some_dict)
 
 
 
