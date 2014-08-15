@@ -67,13 +67,15 @@ class Inventory():
 
         if fields_are_valid:
 
-            new_line = str(new_entry)
+            # new_line = str(new_entry)
 
-            with open(self.inventory_dir, 'w') as inventory:
+            new_line  = new_entry
 
-                inventory.seek(2)
+            with open(self.inventory_dir, 'w+') as inventory:
 
-                inventory.writelines(new_line)
+                # inventory.seek(2)
+
+                inventory.write(new_line)
 
             status = 'Record successfully added.'
 
@@ -130,13 +132,15 @@ class Inventory():
 
         entries = []
 
-        with open(self.inventory_dir, 'r') as inventory:
-
-            for line in inventory:
-
-                dict_of_line = ast.literal_eval(line)
-
-                entries.append(dict_of_line)
+        # with open(self.inventory_dir, 'r') as inventory:
+        #
+        #     for line in inventory:
+        #
+        #         line = line.replace('\n', '')
+        #
+        #         dict_of_line = ast.literal_eval(line)
+        #
+        #         entries.append(dict_of_line)
 
         self.db = entries
 
