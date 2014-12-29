@@ -1,206 +1,61 @@
 #imports
 
-# import pymongo
+import pymongo
 import ast
+from items import Item
 
 
 class Inventory():
 
     def __init__(self):
+        """
 
-        self.fields = [
-            'barcode_number',
-            'item_number',
-            'manufacturer_id',
-            'quantity',
-            'container_type',
-            'room',
-            'unit',
-            'shelf',
-            'container',
-            'slot_number',
-            'description',
-            'notes',
-            'date_added',
-            'expiration_date',
-            'most_recently_used',
-            'preferred_supplier',
-            'supplier_notes',
-        ]
+        :return:
+        """
 
-        self.container_types = [
-            'milk_jug',
-            'egg_carton',
-            'box_set',
-            'individual_item',
-        ]
+    def retrieve_record(self, barcode=None, item_number=None):
+        """ This function will query the inventory database and then create a
+        new instance of the `Item()` class for each item to enable manipulation
+        of data.
 
-        self.data_types = {
-            'barcode_number': 'int',
-            'item_number': 'int',
-            'manufacturer_id': 'int',
-            'quantity': 'int',
-            'container_type': 'str',
-            'room': 'str',
-            'unit': 'int',
-            'shelf': 'int',
-            'container': 'int',
-            'slot_number': 'int',
-            'description': 'str',
-            'notes': 'str',
-            'date_added': 'date',
-            'expiration_date': 'date',
-            'most_recently_used': 'date',
-            'preferred_supplier': 'str',
-            'supplier_notes': 'str',
-            'average_cost': 'float',
-        }
+        :return:
+        """
 
-        self.inventory_dir = 'inventory/main.db'
+    def duplicate(self, item_number, new_barcode):
+        """ Given an item number and a new barcode number, this function will
+        duplicate an entry so that the new item will have all of the metadata
+        from the previous item
 
-        self.db = []
-        self.fetch_db()
+        :param barcode:
+        :return:
+        """
 
-    def new_record(self, new_entry):
+    def new_record(self, data):
+        """ This function goes through the process of creating a new record
+        and storing it in the inventory database.
 
-        fields_are_valid, invalid_fields = self.check_for_valid_fields(new_entry)
+        :param data:
+        :return:
+        """
 
-        if fields_are_valid:
+        
 
-            # new_line = str(new_entry)
+    def search_records(self, query):
+        """ This function queries the database using given parameters to return
+        a list of records matching the query.
 
-            new_line  = new_entry
+        :return:
+        """
 
-            with open(self.inventory_dir, 'w+') as inventory:
+    def update_record(self, barcode, altered_info):
+        """ This function
 
-                # inventory.seek(2)
+        :param barcode:
+        :param modified_info:
+        :return:
+        """
 
-                inventory.write(new_line)
-
-            status = 'Record successfully added.'
-
-        else:
-
-            status = 'Invalid entry fields: {0}'.format(str(invalid_fields))
-
-        return status
-
-    def retrieve_records(self, user_query):
-
-        results = self.query_selection(user_query)
-
-        print results
-
-    def query_selection(self, query_list):
-
-        selection = self.fetch_db()
-        results = []
-
-        for query in query_list:
-
-            for entry in selection:
-
-                value = entry.get(query)
-
-                if value:
-
-                    if entry[query] == query_list[query]:
-
-                        results.append(entry)
-
-                else:
-
-                    selection.remove(entry)
-
-                if selection.__len__() == 0:
-
-                    found_entry = False
-
-                    break
-
-        return results
-
-    def modify_record(self):
-
-        pass
-
-    def log_transaction(self):
-
-        pass
-
-    def fetch_db(self, return_db=False):
-
-        entries = []
-
-        # with open(self.inventory_dir, 'r') as inventory:
-        #
-        #     for line in inventory:
-        #
-        #         line = line.replace('\n', '')
-        #
-        #         dict_of_line = ast.literal_eval(line)
-        #
-        #         entries.append(dict_of_line)
-
-        self.db = entries
-
-        if return_db:
-
-            return entries
-
-
-    def check_for_valid_fields(self, entry):
-
-        status = True
-        invalid_fields = []
-
-        for field in entry:
-
-            if field not in self.fields:
-
-                status = False
-                invalid_fields.append(field)
-
-        return status, invalid_fields
 
 if __name__ == '__main__':
 
     foo = Inventory()
-
-    some_dict = {
-        'shelf': 5467,
-        'room': 'foo',
-        # 'foo': 'bar',
-        # 'baz': 'asdfa',
-    }
-
-    print foo.new_record(some_dict)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
