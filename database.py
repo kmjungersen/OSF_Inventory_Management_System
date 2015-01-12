@@ -16,18 +16,40 @@ class Database():
 
         self.db = self.client.inventory
 
-        self.collection = self.db.inventory
+        self.product_collection = self.db.inventory_prooducts
+        self.item_collection = self.db.inventory_items
 
-        self.collection.ensure_index("barcode_number")
+        self.product_collection.ensure_index("item_number")
+        self.item_collection.ensure_index("barcode_number")
 
-    def add(self, record):
+    def add_item(self, item):
         """ Adds a single record to the inventory database
 
         :param record:
         :return:
         """
 
-        self.collection.insert(record)
+    def add_product(self, product):
+        """ Adds a single product to the inventory database
+
+        :param prduct:
+        :return:
+        """
+
+    def update_item(self, item, updated_info):
+        """ Updates a single item
+
+        :param item:
+        :return:
+        """
+
+
+    def update_product(self, product, updated_info):
+        """
+
+        :param product: an instance of the product class to be updated
+        :return:
+        """
 
     def remove(self, remove_query):
         """ Removes any records that match the given query
@@ -36,7 +58,6 @@ class Database():
         :return:
         """
 
-        self.collection.remove(remove_query)
 
     def find(self, query):
         """ Uses a query to find records
@@ -45,6 +66,4 @@ class Database():
         :return:
         """
 
-        results = self.collection.find(query)
-
-        return results
+        
