@@ -38,8 +38,6 @@ class Inventory():
         :return:
         """
 
-        
-
     def search_records(self, query):
         """ This function queries the database using given parameters to return
         a list of records matching the query.
