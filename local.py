@@ -4,30 +4,36 @@ DB_NODE = '192.168.33.11'
 
 DB_PORT = 8888
 
+# Products and items are listed as a tuple in the form of (<item>, <required>),
+# to indicate whether the field MUST be updated after every edit
+
+# TODO - add a third item to each tuple defining what type of field it is
+
 PRODUCT_FIELDS = [
-    'item_number',
-    'name',
-    'quantity',
-    'description',
-    'notes',
-    'preferred_supplier',
-    'supplier_notes',
-    'container_type',
-    'average_cost',
+    ('product_number', False),
+    ('name', False),
+    ('quantity', True),
+    ('items', True),
+    ('description', False),
+    ('notes', False),
+    ('preferred_supplier', False),
+    ('supplier_notes', False),
+    ('container_type', False),
+    ('average_cost', True),
 ]
 
 ITEM_FIELDS = [
-    'barcode_id',
-    'expiration_date',
-    'room',
-    'unit',
-    'shelf',
-    'container',
-    'slot_number',
-    'date_added',
-    'most_recently_used',
-    'purchased_from',
-    'cost',
+    ('barcode_id', True),
+    ('item_number', True),
+    ('expiration_date', True),
+    ('room', True),
+    ('unit', True),
+    ('shelf', True),
+    ('date_added', True),
+    ('most_recently_used', True),
+    ('purchased_from', True),
+    ('cost', True),
+    ('checked_in', True),
 ]
 
 FIELDS = [
