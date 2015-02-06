@@ -16,14 +16,35 @@ class Item():
         self.db = Database()
         self.is_valid = self.validate()
 
-    def validate(self):
-        """
+        # self.db = Database()
+        self.is_valid = False
+        self.validate()
+
+    def validate(self, info=None):
+        """ Validates the required information fields for an item exist before
+        it can be recorded.
 
         :return:
         """
-        valid = True
 
-        return valid
+        if not info:
+
+            info = self.info
+
+        is_valid = True
+
+        required_fields = dict(ITEM_FIELDS)
+
+        for field, required in required_fields.items():
+
+            if required and not info.get(field):
+                print(field)
+
+                is_valid = False
+
+        self.is_valid = is_valid
+
+        return is_valid
 
     def update(self, updated_info):
         """
