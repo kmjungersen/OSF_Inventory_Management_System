@@ -74,12 +74,61 @@ class Item():
             msg = 'Error! Some items to update were not valid!'
 
         return updated, msg
+
+    def checkout(self):
         """ This function checks out an item given a barcode number
 
         :param barcode:
         :return:
         """
 
+        return self.__item_checking('out')
+
+    def checkin(self):
+        """
+
+        :return:
+        """
+
+        return self.__item_checking('in')
+
+    def __item_checking(self, in_or_out):
+        """ Helper method to handle all checking in or out of items.
+
+        :return:
+        """
+
+        checked_in = self.info['checked_in']
+
+        if checked_in and in_or_out == 'in':
+
+            msg = 'Error!  Item already checked in!'
+
+            return msg
+
+        elif not checked_in and in_or_out == 'out':
+
+            msg = 'Error!  Item already checked out!'
+
+            return msg
+
+        elif (checked_in and in_or_out == 'in') or \
+                (not checked_in and in_or_out == 'out'):
+
+            self.info['checked_in'] = False
+
+            msg = 'Item number {numb} has been checked {in_or_out}'.format(
+                numb=self.info['item_number'],
+                in_or_out=in_or_out,
+            )
+
+            return msg
+
+        else:
+
+            msg = 'Error! Unhandled exception in __item_checking()!'
+
+            return msg
 
 
 class Product():
