@@ -179,6 +179,25 @@ class Product():
         :param updated_info:
         :return:
         """
+        info = self.info
+
+        for key, value in updated_info.items():
+
+            info[key] = value
+
+        if self.validate(info=info):
+
+            self.info = info
+
+            msg = 'Item updated successfully!'
+
+            return msg
+
+        else:
+
+            msg = 'Error! Some items to update were not valid!'
+
+            return msg
 
 
 
