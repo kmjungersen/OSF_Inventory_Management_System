@@ -36,42 +36,29 @@ ITEM_FIELDS = [
     ('checked_in', True),
 ]
 
-FIELDS = [
-    'barcode_id',
-    'name',
-    'quantity',
-    'expiration_date',
-    'description',
-    'notes',
-    'quantity',
-    'container_type',
-    'room',
-    'unit',
-    'shelf',
-    'container',
-    'slot_number',
-    'date_added',
-    'most_recently_used',
-    'purchased_from',
-    'cost',
-    'average_cost',
-    'preferred_supplier',
-    'supplier_notes',
-]
+# CONTAINER_TYPES = [
+#     'milk_jug',
+#     'egg_carton',
+#     'box_set',
+#     'individual_item',
+# ]
 
-REQUIRED_FIELDS = [
-    'barcode_id',
-    'name',
-    'quantity',
-    'expiration_date',
-]
+CONTAINERS = {
+    'milk_jug': [
+        ('size', False),
+        ('estimated_remaining', True),
+    ],
+    'egg_carton': [
+        ('container_capacity', False),
+        ('quantity_remaining', True),
+    ],
+    'box_set': [
+        ('set_contents', False)
+    ],
+    'individual_item': [
 
-CONTAINER_TYPES = [
-    'milk_jug',
-    'egg_carton',
-    'box_set',
-    'individual_item',
-]
+    ],
+}
 
 # DATA_TYPES = {
 #     'barcode_number': 'int',
