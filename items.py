@@ -3,18 +3,18 @@
 """
 
 from database import Database
+from local import *
 
 
 class Item():
 
-    def __init__(self):
+    def __init__(self, info):
         """
 
         :return:
         """
 
-        self.db = Database()
-        self.is_valid = self.validate()
+        self.info = info
 
         # self.db = Database()
         self.is_valid = False
