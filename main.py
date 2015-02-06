@@ -1,8 +1,8 @@
 #imports
 
-import pymongo
-import ast
-from items import Item
+from items import Item, Product
+from database import Database
+from local import *
 
 
 class Inventory():
