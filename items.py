@@ -47,13 +47,33 @@ class Item():
         return is_valid
 
     def update(self, updated_info):
-        """
+        """ Updates an item with new information
 
         :param updated_info:
         :return:
         """
 
-    def checkout(self, barcode):
+        updated = False
+
+        info = self.info
+
+        for key, value in updated_info.items():
+
+            info[key] = value
+
+        if self.validate(info=info):
+
+            self.info = info
+
+            updated = True
+
+            msg = 'Item updated successfully!'
+
+        else:
+
+            msg = 'Error! Some items to update were not valid!'
+
+        return updated, msg
         """ This function checks out an item given a barcode number
 
         :param barcode:
