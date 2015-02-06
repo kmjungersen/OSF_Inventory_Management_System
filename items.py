@@ -143,27 +143,33 @@ class Product():
         self.items = []
         self.info = {}
 
-        self.db = Database()
+        self.is_valid = False
+        self.validate()
 
-        self.is_valid = self.validate()
-
-    def fetch_data(self):
-        """
-
-        :return:
-        """
-
-        self.info = self.db.find()
-
-    def validate(self):
-        """ This function validates the data given for the item and will
-        identify and return any validation errors
+    def validate(self, info=None):
+        """ Validates the required information fields for an item exist before
+        it can be recorded.
 
         :return:
         """
-        valid = True
 
-        return valid
+        if not info:
+
+            info = self.info
+
+        is_valid = True
+
+        required_fields = dict(PRODUCT_FIELDS)
+
+        for field, required in required_fields.items():
+
+            if required and not info.get(field):
+
+                is_valid = False
+
+        self.is_valid = is_valid
+
+        return is_valid
 
 
     def update(self, updated_info):
