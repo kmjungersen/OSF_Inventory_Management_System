@@ -29,6 +29,8 @@ class Database():
         :return:
         """
 
+
+
     def add_product(self, product):
         """ Adds a single product to the inventory database
 
@@ -59,11 +61,21 @@ class Database():
         """
 
 
-    def find(self, query):
+    def find(self, query, collection):
         """ Uses a query to find records
 
         :param query:
+        :param collection:
         :return:
         """
 
+        if not collection:
+
+            collection = 'all'
+
+
+        results = []
+
+
+        return results
         
