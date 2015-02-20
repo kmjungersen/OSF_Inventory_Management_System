@@ -1,6 +1,7 @@
 from items import Item, Product
 from pymongo import MongoClient
 from local import *
+from database import Database
 
 
 class TestDB():
@@ -137,5 +138,51 @@ class TestProducts:
         p = self.setup_product()
 
         assert p.quantity == self.number_of_items
+
+class TestDatabase():
+
+    def setup(self):
+
+        self.test_item_info = {
+            'barcode_id': 12345,
+            'expiration_date': '1/23/15',
+            'room': '5',
+            'unit': '6',
+            'shelf': '2',
+            'date_added': '1/15/15',
+            'most_recently_used': '1/20/15',
+            'purchased_from': 'ACME inc',
+            'cost': '350',
+            'item_number': 78465,
+            'checked_in': True,
+        }
+
+        test_items = []
+        self.number_of_items = 5
+
+        for x in range(0, self.number_of_items):
+
+            self.test_item_info['barcode_id'] = x
+            item = Item(self.test_item_info)
+
+            test_items.append(item)
+
+        self.test_product_info = {
+            'product_number': 1235456,
+            'name': 'foo product',
+            'items': test_items,
+            'description': 'foooooo',
+            'notes': 'here are some cool notes',
+            'preferred_supplier': 'ACME',
+            'supplier_notes': 'beep beep',
+            'container_type': 'milk_jug',
+            'average_cost': 4562,
+        }
+
+        self.db = Database()
+
+    def test_write_items(self):
+
+        
 
 
