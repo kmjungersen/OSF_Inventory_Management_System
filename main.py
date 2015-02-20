@@ -137,7 +137,6 @@ class Inventory():
     #     :return:
     #     """
 
-
     def __retrieve_products(self, query):
         """
 
