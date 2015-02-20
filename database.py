@@ -12,15 +12,21 @@ class Database():
         :return:
         """
 
-        self.client = MongoClient(host=DB_NODE, port=DB_PORT)
+        client = MongoClient(host=DB_NODE, port=DB_PORT)
 
-        self.db = self.client.inventory
+        database = client.inventory
 
-        self.product_collection = self.db.inventory_prooducts
-        self.item_collection = self.db.inventory_items
+        product_collection = database.inventory_prooducts
+        item_collection = database.inventory_items
 
-        self.product_collection.ensure_index("item_number")
-        self.item_collection.ensure_index("barcode_number")
+        product_collection.ensure_index("product_number")
+        item_collection.ensure_index("barcode_id")
+        item_collection.ensure_index("item_number")
+
+        self.db = {
+            'items': item_collection,
+            'products': product_collection,
+        }
 
     def add_item(self, item):
         """ Adds a single record to the inventory database
