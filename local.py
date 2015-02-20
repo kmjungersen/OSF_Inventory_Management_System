@@ -2,12 +2,15 @@ __author__ = 'kurtisjungersen'
 
 DB_NODE = '192.168.33.11'
 
-DB_PORT = 8888
+DB_PORT = 27017
 
 # Products and items are listed as a tuple in the form of (<item>, <required>),
 # to indicate whether the field MUST be updated after every edit
 
 # TODO - add a third item to each tuple defining what type of field it is
+# TODO - add a fourth item to each tuple defining required setup fields
+
+# TODO - change 'product_number' to 'product_id' and same for items
 
 PRODUCT_FIELDS = [
     ('product_number', False),
