@@ -46,6 +46,7 @@ class Item():
 
         return is_valid
 
+    #TODO add decorators
     def update(self, updated_info):
         """ Updates an item with new information
 
@@ -141,7 +142,9 @@ class Product():
         """
 
         self.items = []
-        self.info = {}
+        self.info = record_info
+
+        self.quantity = self.__update_quantity()
 
         self.is_valid = False
         self.validate()
@@ -171,7 +174,6 @@ class Product():
 
         return is_valid
 
-
     def update(self, updated_info):
         """ This function will update any data that has changed since the
         record was pulled and then log those changes
@@ -199,9 +201,23 @@ class Product():
 
             return msg
 
+    def __update_quantity(self):
+        """ This function updates the quantity based on the number of items
+        is has associated with it.
 
+        :return:
+        """
 
+        quantity = 0
 
+        for item in self.info['items']:
+
+            quantity += 1
+
+        self.quantity = quantity
+        self.info['quantity'] = self.quantity
+
+        return quantity
 
     #TODO - this should be done using decorators so that every single change
     # is logged
