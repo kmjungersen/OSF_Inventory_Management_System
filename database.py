@@ -34,8 +34,9 @@ class Database():
         :param record:
         :return:
         """
+        record = item.info
 
-
+        self.__write(record, 'items')
 
     def add_product(self, product):
         """ Adds a single product to the inventory database
@@ -43,6 +44,10 @@ class Database():
         :param prduct:
         :return:
         """
+
+        record = product.info
+
+        self.__write(record, 'products')
 
     def update_item(self, item, updated_info):
         """ Updates a single item
@@ -52,6 +57,7 @@ class Database():
         """
 
 
+
     def update_product(self, product, updated_info):
         """
 
@@ -59,29 +65,124 @@ class Database():
         :return:
         """
 
-    def remove(self, remove_query):
+        product_number = product.info.get('product_number')
+
+        query = {
+            'product_number': product_number,
+        }
+
+
+
+    def remove_item(self, remove_query):
         """ Removes any records that match the given query
 
         :param record:
         :return:
         """
 
-
-    def find(self, query, collection):
-        """ Uses a query to find records
+    def find_one_item(self, query):
+        """
 
         :param query:
+        :return:
+        """
+
+        results = self.find_items(query)
+
+        if results.__len__() == 1:
+
+            return results[0]
+
+    def find_one_product(self, query):
+        """
+
+        :param query:
+        :return:
+        """
+
+        results = self.find_products(query)
+
+        if results.__len__() == 1:
+
+            return results[0]
+
+    def find_one(self, query, type):
+        """
+
+        :param query:
+        :return:
+        """
+
+        if type == 'items':
+
+            self.find_one_item(query)
+
+        elif type == 'products':
+
+            self.find_one_product(query)
+
+    def find_items(self, query):
+        """
+
+        :param query:
+        :return:
+        """
+
+        results = []
+
+        table = self.db.get('items')
+
+        items = table.find(query)
+
+        return results
+
+    def find_products(self, query):
+        """
+
+        :param query:
+        :return:
+        """
+
+        results = []
+
+        return results
+
+    def __update(self, record_type, new_record):
+        """
+
+        :param record:
         :param collection:
         :return:
         """
 
-        if not collection:
+        # new_record = obj.info
 
-            collection = 'all'
+        obj = '{record}_number'.format(
+            record=record_type,
+        )
 
+        obj_number = new_record.get(obj)
 
-        results = []
+        query = {
+            obj: obj_number,
+        }
 
+        old_record = self.find_one_item(query)
 
-        return results
-        
+        changed_fields = set(old_record.items()) ^ set(new_record.items())
+
+        table = self.db.get('items')
+
+        table.update(query, {'$set': changed_fields})
+
+    def __write(self, record, collection):
+        """
+
+        :param record:
+        :param collection:
+        :return:
+        """
+
+        table = self.db.get(collection)
+
+        table.insert(record)
