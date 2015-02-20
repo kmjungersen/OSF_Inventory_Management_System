@@ -1,5 +1,15 @@
 from items import Item, Product
+from pymongo import MongoClient
+from local import *
 
+
+class TestDB():
+
+    def __init__(self):
+        c = MongoClient(host=DB_NODE, port=DB_PORT)
+        db = c.inventory
+        self.items = db.items
+        self.products = db.products
 
 class TestItems:
 
@@ -70,10 +80,10 @@ class TestProducts:
             'checked_in': True,
         }
 
-
         test_items = []
+        self.number_of_items = 5
 
-        for x in range[5]:
+        for x in range(0, self.number_of_items):
 
             self.test_item_info['barcode_id'] = x
             item = Item(self.test_item_info)
@@ -83,7 +93,6 @@ class TestProducts:
         self.test_product_info = {
             'product_number': 1235456,
             'name': 'foo product',
-            'quantity': 45,
             'items': test_items,
             'description': 'foooooo',
             'notes': 'here are some cool notes',
@@ -117,10 +126,16 @@ class TestProducts:
     def test_required_fields_missing(self):
 
         info = self.test_product_info
-        info.__delitem__('barcode_id')
+        info.__delitem__('average_cost')
 
         p = self.setup_product(info)
 
         assert not p.is_valid
+
+    def test_product_count(self):
+
+        p = self.setup_product()
+
+        assert p.quantity == self.number_of_items
 
 
