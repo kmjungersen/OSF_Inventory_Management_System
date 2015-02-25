@@ -179,10 +179,7 @@ class TestDatabase():
             'average_cost': 4562,
         }
 
-        self.db = Database()
+        self.db = Database(debug=True)
 
-    def test_write_items(self):
-
-        
-
+    def test_add_item(self):
 
