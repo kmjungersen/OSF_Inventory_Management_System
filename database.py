@@ -18,8 +18,15 @@ class Database():
 
         database = client.inventory
 
-        product_collection = database.inventory_prooducts
-        item_collection = database.inventory_items
+        if debug:
+
+            product_collection = database.test_inventory_products
+            item_collection = database.test_inventory_items
+
+        else:
+
+            product_collection = database.inventory_prooducts
+            item_collection = database.inventory_items
 
         product_collection.ensure_index("product_number")
         item_collection.ensure_index("barcode_id")
