@@ -16,7 +16,7 @@ PRODUCT_FIELDS = [
     ('product_number', False),
     ('name', False),
     ('quantity', True),
-    ('items', True),
+    ('item_ids', True),
     ('description', False),
     ('notes', False),
     ('preferred_supplier', False),
