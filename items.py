@@ -134,7 +134,7 @@ class Item():
 
 class Product():
 
-    def __init__(self, record_info):
+    def __init__(self, record_info, items=None):
         """
 
         :param record_info:
@@ -142,12 +142,32 @@ class Product():
         """
 
         self.items = []
+
         self.info = record_info
+
+        if items:
+
+            self.add_items(items)
+
+        else:
+
+            item_list = self.info.get('item_ids')
+            self.add_items(item_list)
 
         self.quantity = self.__update_quantity()
 
         self.is_valid = False
         self.validate()
+
+    def __eq__(self, other):
+        """
+
+        :param other:
+        :return:
+        """
+
+        return self.info
+
 
     def validate(self, info=None):
         """ Validates the required information fields for an item exist before
@@ -201,6 +221,41 @@ class Product():
 
             return msg
 
+    def add_items(self, items_to_add):
+        """
+
+        :param list items: a list of instances of the class `Item()`
+        :return:
+        """
+        item_id_list = []
+
+        for item in items_to_add:
+
+            item_id = item.info.get('item_number')
+
+            item_id_list.append(item_id)
+
+            self.items.append(item)
+
+        self.info['item_ids'].append(item_id_list)
+
+    def remove_items(self, items_to_remove):
+        """
+
+        :return:
+        """
+
+        pass
+
+    def __update_item(self, item):
+        """
+
+        :return:
+        """
+
+        
+
+
     def __update_quantity(self):
         """ This function updates the quantity based on the number of items
         is has associated with it.
@@ -208,16 +263,13 @@ class Product():
         :return:
         """
 
-        quantity = 0
+        items = self.info.get('item_ids')
+        quantity = len(items)
 
-        for item in self.info['items']:
-
-            quantity += 1
-
-        self.quantity = quantity
         self.info['quantity'] = self.quantity
 
         return quantity
+
 
     #TODO - this should be done using decorators so that every single change
     # is logged
@@ -228,6 +280,28 @@ def log_change(self, updated_info):
 
         :return:
         """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # class Kit():
