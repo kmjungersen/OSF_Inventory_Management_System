@@ -81,7 +81,7 @@ class TestProducts:
             'checked_in': True,
         }
 
-        test_items = []
+        self.test_items = []
         self.number_of_items = 5
 
         for x in range(0, self.number_of_items):
@@ -89,12 +89,11 @@ class TestProducts:
             self.test_item_info['barcode_id'] = x
             item = Item(self.test_item_info)
 
-            test_items.append(item)
+            self.test_items.append(item)
 
         self.test_product_info = {
             'product_number': 1235456,
             'name': 'foo product',
-            'items': test_items,
             'description': 'foooooo',
             'notes': 'here are some cool notes',
             'preferred_supplier': 'ACME',
@@ -103,12 +102,15 @@ class TestProducts:
             'average_cost': 4562,
         }
 
-    def setup_product(self, info=None):
+    def setup_product(self, info=None, items=None):
 
         if not info:
             info = self.test_product_info
 
-        product = Product(info)
+        if not items:
+            items = self.test_items
+
+        product = Product(info, items)
 
         return product
 
@@ -181,5 +183,32 @@ class TestDatabase():
 
         self.db = Database(debug=True)
 
+    def setup_item(self, info=None):
+
+        if not info:
+            info = self.test_item_info
+
+        item = Item(info)
+
+        return item
+
+    def setup_product(self, info=None):
+
+        if not info:
+            info = self.test_product_info
+
+        product = Product(info)
+
+        return product
+
     def test_add_item(self):
 
+        item = self.setup_item()
+
+        assert self.db.add_item(item)
+
+    def test_add_product(self):
+
+        product = self.setup_product()
+
+        assert self.db.add_product(product)
