@@ -45,7 +45,9 @@ class Database():
         """
         record = item.info
 
-        self.__write('items', record)
+        return self.__write('items', record)
+
+
 
     def add_product(self, product):
         """ Adds a single product to the inventory database
@@ -56,7 +58,7 @@ class Database():
 
         record = product.info
 
-        self.__write('products', record)
+        return self.__write('products', record)
 
     def update_item(self, item):
         """ Updates a single item
@@ -225,7 +227,7 @@ class Database():
 
         table = self.db.get(record_type)
 
-        table.insert(record)
+        return table.insert(record)
 
     def __remove(self, record_type, record_id):
         """
