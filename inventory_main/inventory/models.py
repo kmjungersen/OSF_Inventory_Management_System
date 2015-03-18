@@ -11,10 +11,15 @@ class Product(models.Model):
     date_first_added = models.DateTimeField('date added')
     foo = 5
 
-    quantity = 0
 
     def __str__(self):
         return self.name
+
+    def __int__(self):
+        return len(self.item_set.all())
+
+    def __return_quantity(self):
+        return int(self)
 
 
 class Item(models.Model):
