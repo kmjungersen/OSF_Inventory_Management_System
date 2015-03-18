@@ -1,0 +1,12 @@
+<h1>New Product Form</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="add_product/" method="post">
+    {% csrf_token %}
+
+    name: <input type="text" name="name" value="Product Name">
+
+    <input type="submit" value="submit" />
+
+</form>

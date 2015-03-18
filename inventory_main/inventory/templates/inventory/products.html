@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+    <h2>Products</h2>
+
+    {% for product in products %}
+        <h3>--->{{ product }}</h3>
+            There are {{ product }} items here
+
+            <h4>Items for this product</h4>
+
+                <ul>
+                    {% for item in product.item_set.all %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+
+
+    {% endfor %}
+</body>
+</html>
