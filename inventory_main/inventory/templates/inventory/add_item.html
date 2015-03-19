@@ -1,0 +1,52 @@
+<h1>New Item Form</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+{% if first_pass %}
+<form action="lookup_product/" method="post">
+    {% csrf_token %}
+
+    Barcode ID: <input type="number" name="barcode_id">
+    <br/>
+
+    <input type="submit" value="submit" />
+
+</form>
+{% endif %}
+
+{% if not first_pass %}
+<form action="add_item/" method="post">
+    {% csrf_token %}
+
+    {% if product_found %}
+
+        Barcode ID: <input type="number" name="barcode_id" value="{{ barcode_id }}">
+        <br/>
+
+        Name: <input type="text" name="name" value="{{ product_name }}">
+        <br/>
+
+    {% else %}
+
+        Barcode ID: <input type="number" name="barcode_id">
+        <br/>
+
+        Name: <input type="text" name="name">
+        <br/>
+
+    {% endif %}
+
+        Cost: <input type="number" name="cost">
+        <br/>
+
+        Lot Number: <input type="number" name="lot_number">
+        <br/>
+
+        Expiration Date (defaults to {{ default_expiration }} days): <input type="date" name="expiration_date">
+        <br/>
+
+    <input type="submit" value="Submit">
+
+</form>
+
+{% endif %}

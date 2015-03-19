@@ -5,7 +5,10 @@
 <form action="add_product/" method="post">
     {% csrf_token %}
 
-    name: <input type="text" name="name" value="Product Name">
+    Product Name: <input type="text" name="name" value="">
+    <br/>
+    Barcode ID: <input type="number" name="barcode_id">
+    <br/>
 
     <input type="submit" value="submit" />
 
