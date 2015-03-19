@@ -11,5 +11,5 @@ urlpatterns = patterns('',
     url(r'add_product/$', views.add_product, name='add_product'),
     url(r'add_item/$', views.add_item, name='add_item'),
 
-    url(r'lookup_product/$', views.lookup_product, name='lookup_product')
+    url(r'(?P<form_origin>\w+)/lookup_product/$', views.lookup_product, name='lookup_product')
 )
