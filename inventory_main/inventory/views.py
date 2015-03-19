@@ -17,10 +17,11 @@ def index(request):
 
 def add_product_form(request):
 
-    return render(request, 'inventory/add_product.html')
+    return render(request, 'inventory/add_product.html', {'first_pass': True})
 
 
 def add_product(request):
+    ipdb.set_trace()
 
     p = Product(
         name=request.POST['name'],
@@ -32,31 +33,33 @@ def add_product(request):
     return redirect('index')
 
 
-def lookup_product(request):
-
-    product_found = False
+def lookup_product(request, form_origin):
 
     barcode_id = request.POST['barcode_id']
+
+    template = 'inventory/add_{origin}.html'.format(
+        origin=form_origin,
+    )
 
     try:
         product = Product.objects.get(barcode_id__exact=barcode_id)
 
-        return render(request, 'inventory/add_item.html', {
+        return render(request, template, {
             'first_pass': False,
             'product_found': True,
             'barcode_id': product.barcode_id,
             'product_name': product.name,
+            'description': product.description,
         })
 
     except Exception as error_message:
 
-        return render(request, 'inventory/add_item.html', {
+        return render(request, template, {
             'first_pass': False,
             'product_found': False,
+            'barcode_id': barcode_id,
             'error_message': error_message,
         })
-
-
 
 
 def add_item_form(request):
