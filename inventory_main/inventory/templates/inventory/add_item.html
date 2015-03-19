@@ -3,7 +3,7 @@
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 {% if first_pass %}
-<form action="lookup_product/" method="post">
+<form action="item/lookup_product/" method="post">
     {% csrf_token %}
 
     Barcode ID: <input type="number" name="barcode_id">
