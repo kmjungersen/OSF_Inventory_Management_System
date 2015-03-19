@@ -2,14 +2,72 @@
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="add_product/" method="post">
-    {% csrf_token %}
+{% if first_pass %}
 
-    Product Name: <input type="text" name="name" value="">
-    <br/>
-    Barcode ID: <input type="number" name="barcode_id">
-    <br/>
+    <form action="product/lookup_product/" method="post">
+        {% csrf_token %}
 
-    <input type="submit" value="submit" />
+        <strong>Please scan your barcode now:</strong>
+        <br/>
 
-</form>
+        Barcode ID: <input type="number" name="barcode_id">
+        <br/>
+
+        <input type="submit" value="first" />
+
+    </form>
+
+{% else %}
+
+    {% if product_found %}
+
+        <h4>This product already exists!</h4>
+        <br/>
+
+        <strong>Barcode ID: </strong>{{ barcode_id }}
+        <br/>
+
+        <strong>Product Name: </strong>{{ name }}
+        <br/>
+
+        <strong>Description: </strong>{{ description }}
+        <br/><br/><br/>
+
+        <a href="add_product_form/">Return to previous form</a>
+
+    {% else %}
+
+    <form action="add_product/" method="post">
+        {% csrf_token %}
+
+        <h4>Please enter the product information below:</h4>
+        <br/>
+
+        <strong>Barcode ID: </strong><input type="number" name="barcode_id" value="{{ barcode_id }}">
+        <br/>
+
+        <strong>Product Name: </strong><input type="text" name="name">
+        <br/>
+
+        <strong>Description: </strong><textarea rows="3" name="description"></textarea>
+        <br/>
+
+        <strong>Notes: </strong><textarea rows="3" name="notes"></textarea>
+        <br/>
+
+        <input type="submit" value="second" />
+
+        <br/><br/><br/>
+
+    </form>
+
+    {% endif %}
+
+
+    <!--Product Name: <input type="text" name="name" value="">-->
+    <!--<br/>-->
+
+
+
+
+{% endif %}
