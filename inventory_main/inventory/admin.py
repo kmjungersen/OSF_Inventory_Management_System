@@ -29,7 +29,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 class ItemAdmin(admin.ModelAdmin):
 
-    list_display = ('item_number', 'expiration_date')
+    list_display = ('item_number', 'lot_number', 'expiration_date')
 
 
 
