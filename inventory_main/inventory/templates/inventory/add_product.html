@@ -1,3 +1,10 @@
+<head>
+    <title>Add Product Form</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'inventory/site.css' %}">
+</head>
+<body>
+
 <h1>New Product Form</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
