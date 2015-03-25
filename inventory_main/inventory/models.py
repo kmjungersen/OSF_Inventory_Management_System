@@ -15,25 +15,43 @@ class Product(models.Model):
     product_number = models.BigIntegerField(default=0)
 
     now = datetime.now()
-
     date_first_added = models.DateTimeField('date added', default=now)
-    foo = 5
+
 
     def __str__(self):
         return self.name
 
     def __int__(self):
+        return self.return_quantity()
+
+    @property
+    def quantity(self):
         return len(self.item_set.all())
 
-    def __return_quantity(self):
-        return int(self)
+    # def update_quantity(self):
+    #     self.quantity = len(self.item_set.all())
+    #     return self.quantity
 
-    def _compute_average_price(self):
-        pass
+    @property
+    def average_cost(self):
+
+        item_set = self.item_set.all()
+
+        total_cost = 0
+
+        for item in item_set:
+            total_cost += item.cost
+
+        quantity = self._update_quantity()
+
+        average_item_cost = total_cost / quantity
+
+        return average_item_cost
 
 
 class Item(models.Model):
     product = models.ForeignKey(Product)
+    # distributor = models.ForeignKey(Supplier)
 
     item_number = models.BigIntegerField(default=0)
 
@@ -44,11 +62,45 @@ class Item(models.Model):
 
     cost = models.DecimalField(decimal_places=2, max_digits=8)
 
+    location_room = models.CharField(max_length=200, null=True)
+    location_unit = models.CharField(max_length=200, null=True)
+    location_shelf = models.CharField(max_length=200, null=True)
+
     def __str__(self):
 
-        something = 'item #{number} of {product}'.format(
+        something = '{product} with lot #: {number}'.format(
             product=self.product.name,
             number=str(self.lot_number)
         )
 
         return something
+
+    @property
+    def location(self):
+
+        location = 'Room: {room}, Unit: {unit}, Shelf: {shelf}'.format(
+            room=self.location_room,
+            unit=self.location_unit,
+            shelf=self.location_shelf,
+        )
+
+        return location
+
+
+# class Supplier(models.Model):
+#     supplier_name = models.CharField(max_length=200)
+#
+#     url = models.URLField()
+#
+#     supplier_notes = models.TextField(null=True)
+#
+#     def __str__(self):
+#         return self.supplier_name
+#
+#     def _return_quantity(self):
+#         count = 0
+#
+#         for item in self.objects.all():
+#             count += 1
+#
+#         return count
