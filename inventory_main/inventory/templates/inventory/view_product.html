@@ -1,0 +1,46 @@
+<head>
+    <title>View Product</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'inventory/site.css' %}">
+</head>
+<body>
+<h3>{{ product.name }}</h3>
+
+<strong>Barcode ID: </strong>{{ product.barcode_id }}
+<br/>
+
+<strong>Description: </strong>{{ product.description }}
+<br/>
+
+<strong>Notes: </strong>{{ product.notes }}
+<br/>
+
+<strong>Average Cost: </strong>{{ product.average_cost }}
+<br/><br/>
+
+{% if product.quantity == 1  %}
+There is {{ product.quantity }} item for this product:
+
+{% elif product.quantity == 0 %}
+There are no items for this product.
+
+{% elif product.quantity > 1 %}
+There are {{ product.quantity }} items for this product:
+
+{% endif %}
+
+<ul>
+    {% for item in product.item_set.all %}
+
+        <li>
+            Lot #: {{ item.lot_number}}
+            <br/>
+            Expiration Date: {{ item.expiration_date }}
+            <br/>
+            Cost: {{ item.cost }}
+            <br/>
+        </li>
+    {% endfor %}
+</ul>
+</body>
+
