@@ -16,10 +16,20 @@
         <br/>
 
     {% for product in products %}
-        <h3>--->{{ product }}</h3>
-            There are {{ product }} items here
+        <h3>---> <a href="view_product/{{ product.barcode_id }}/">{{ product }}</a></h3>
 
-            <h4>Items for this product</h4>
+            {% if product.quantity == 1  %}
+            There is {{ product.quantity }} item for this product
+
+            {% elif product.quantity == 0 %}
+            There are no items for this product
+
+            {% elif product.quantity > 1 %}
+            There are {{ product.quantity }} items for this product
+
+            {% endif %}
+
+            <!--<h4>Items for this product</h4>-->
 
                 <ul>
                     {% for item in product.item_set.all %}

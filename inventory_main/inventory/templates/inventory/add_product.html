@@ -7,7 +7,7 @@
 
 <h1>New Product Form</h1>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% if error_message %}<p>{{ error_message }}</p>{% endif %}
 
 {% if first_pass %}
 
@@ -17,7 +17,7 @@
         <strong>Please scan your barcode now:</strong>
         <br/>
 
-        Barcode ID: <input type="number" name="barcode_id">
+        Barcode ID: <input type="number" name="barcode_id" autofocus="true">
         <br/>
 
         <input type="submit" value="first" />
@@ -31,50 +31,43 @@
         <h4>This product already exists!</h4>
         <br/>
 
-        <strong>Barcode ID: </strong>{{ barcode_id }}
+        Barcode ID: {{ barcode_id }}
         <br/>
 
-        <strong>Product Name: </strong>{{ name }}
+        Product Name: {{ product_name }}
         <br/>
 
-        <strong>Description: </strong>{{ description }}
-        <br/><br/><br/>
+        Description: {{ description }}
+        <br/><br/>
 
-        <a href="add_product_form/">Return to previous form</a>
+        <a href="javascript:history.back()">Go Back</a>
+        <br/>
 
     {% else %}
+
+    <strong>Please enter the product information below: </strong>
+        <br/>
 
     <form action="add_product/" method="post">
         {% csrf_token %}
 
-        <h4>Please enter the product information below:</h4>
+        Barcode ID: <input type="number" name="barcode_id" value="{{ barcode_id }}">
         <br/>
 
-        <strong>Barcode ID: </strong><input type="number" name="barcode_id" value="{{ barcode_id }}">
+        Product Name: <input type="text" name="product_name" value="{{ product_name }}" autofocus="true">
         <br/>
 
-        <strong>Product Name: </strong><input type="text" name="name">
+        Description: <textarea rows="3" name="description" placeholder="foo"></textarea>
         <br/>
 
-        <strong>Description: </strong><textarea rows="3" name="description"></textarea>
-        <br/>
-
-        <strong>Notes: </strong><textarea rows="3" name="notes"></textarea>
+        Notes: <textarea rows="3" name="notes"></textarea>
         <br/>
 
         <input type="submit" value="second" />
-
-        <br/><br/><br/>
 
     </form>
 
     {% endif %}
 
-
-    <!--Product Name: <input type="text" name="name" value="">-->
-    <!--<br/>-->
-
-
-
-
 {% endif %}
+</body>
