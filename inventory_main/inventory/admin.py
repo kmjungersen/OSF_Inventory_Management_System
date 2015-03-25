@@ -5,7 +5,7 @@ from inventory.models import Product, Item
 
 class ItemsInLine(admin.TabularInline):
     model = Item
-    extra = 1
+    extra = 0
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -13,7 +13,7 @@ class ProductAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['name']}),
         ('Product details', {
-            'fields': ['barcode_id', 'product_number']
+            'fields': ['barcode_id', 'description', 'notes']
         }),
 
         ('Date Information', {
