@@ -3,6 +3,7 @@ __author__ = 'kmjungersen'
 
 from pyscan.main import Barcode
 from functools import wraps
+from inventory.models import Product, Item
 import errno
 import os
 import signal
@@ -73,3 +74,10 @@ def query_upc_database(barcode_id):
     return result
 
 
+def lookup_item(barcode_id, item_id):
+
+    product = Product.objects.get(barcode_id__exact=barcode_id)
+
+    item = product.item_set.get(id__exact=item_id)
+
+    return item
