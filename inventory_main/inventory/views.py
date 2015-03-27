@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from datetime import datetime
-from inventory.utils import query_upc_database
+from inventory.utils import query_upc_database, lookup_item
 
 from inventory.models import Product, Item
 
@@ -9,6 +9,7 @@ from inventory.models import Product, Item
 import ipdb
 
 # Create your views here.
+
 
 def index(request):
     latest_product_list = Product.objects.all()
@@ -35,7 +36,8 @@ def add_product(request):
 
     p = Product(
         name=request.POST['product_name'],
-        barcode_id=request.POST['barcode_id']
+        barcode_id=request.POST['barcode_id'],
+        description=request.POST['']
     )
 
     p.save()
@@ -141,5 +143,52 @@ def view_product(request, barcode_id):
     return render(request, 'inventory/view_product.html', {
         'product': product,
     })
+
+
+def view_checked_out_items(request):
+
+    products = Product.objects.all()
+
+    products_with_checked_out_items = []
+
+    for p in products:
+
+        if p.items_checked_out >= 1:
+
+            products_with_checked_out_items.append(p)
+
+    return render(request, 'inventory/view_checked_out_items.html', {
+        'products': products_with_checked_out_items,
+    })
+
+
+def view_item(request, barcode_id, item_id):
+
+    product = Product.objects.get(barcode_id__exact=barcode_id)
+
+    item = product.item_set.get(id__exact=item_id)
+
+    return render(request, 'inventory/view_item.html', {
+        'item': item,
+    })
+
+
+def checkout_form(request, barcode_id, item_id):
+
+    item = lookup_item(barcode_id, item_id)
+
+    return render(request, 'inventory/checkout_form.html', {
+        'item': item,
+    })
+
+def checkout(request, barcode_id, item_id):
+
+    item = lookup_item(barcode_id, item_id)
+
+    item.checked_in = False
+
+    item.save()
+
+    return redirect('index')
 
 
