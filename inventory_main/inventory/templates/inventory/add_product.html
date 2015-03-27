@@ -14,13 +14,13 @@
     <form action="product/lookup_product/" method="post">
         {% csrf_token %}
 
-        <strong>Please scan your barcode now:</strong>
+        <b>Please scan your barcode now:</b>
         <br/>
 
         Barcode ID: <input type="number" name="barcode_id" autofocus="true">
         <br/>
 
-        <input type="submit" value="first" />
+        <input type="submit" value="Submit" />
 
     </form>
 
@@ -45,7 +45,7 @@
 
     {% else %}
 
-    <strong>Please enter the product information below: </strong>
+    <b>Please enter the product information below: </b>
         <br/>
 
     <form action="add_product/" method="post">
@@ -63,7 +63,7 @@
         Notes: <textarea rows="3" name="notes"></textarea>
         <br/>
 
-        <input type="submit" value="second" />
+        <input type="submit" value="Submit" />
 
     </form>
 

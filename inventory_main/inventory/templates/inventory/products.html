@@ -2,30 +2,31 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>Inventory</title>
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'inventory/site.css' %}">
 </head>
 <body>
 
-    <h2>Products</h2>
+    <h2>Inventory</h2>
         <br/>
     <a href="add_product_form">Add a new product</a>
         <br/>
     <a href="add_item_form">Add a new item</a>
         <br/>
+    <a href="view_checked_out_items">View checked out items</a>
 
     {% for product in products %}
         <h3>---> <a href="view_product/{{ product.barcode_id }}/">{{ product }}</a></h3>
 
             {% if product.quantity == 1  %}
-            There is {{ product.quantity }} item for this product
+            There is {{ product.quantity }} item for this product:
 
             {% elif product.quantity == 0 %}
-            There are no items for this product
+            (There are no items for this product)
 
             {% elif product.quantity > 1 %}
-            There are {{ product.quantity }} items for this product
+            There are {{ product.quantity }} items for this product:
 
             {% endif %}
 

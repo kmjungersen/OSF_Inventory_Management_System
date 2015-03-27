@@ -2,20 +2,21 @@
     <title>View Product</title>
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'inventory/site.css' %}">
+
 </head>
 <body>
-<h3>{{ product.name }}</h3>
+<h2>{{ product.name }}</h2>
 
-<strong>Barcode ID: </strong>{{ product.barcode_id }}
+<b>Barcode ID: </b>{{ product.barcode_id }}
 <br/>
 
-<strong>Description: </strong>{{ product.description }}
+<b>Description: </b>{{ product.description }}
 <br/>
 
-<strong>Notes: </strong>{{ product.notes }}
+<b>Notes: </b>{{ product.notes }}
 <br/>
 
-<strong>Average Cost: </strong>{{ product.average_cost }}
+<b>Average Cost: </b>{{ product.average_cost }}
 <br/><br/>
 
 {% if product.quantity == 1  %}

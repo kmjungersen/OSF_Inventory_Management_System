@@ -8,14 +8,14 @@
 
 <h1>New Item Form</h1>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% if error_message %}<p><b>{{ error_message }}</b></p>{% endif %}
 
 {% if first_pass %}
 
     <form action="item/lookup_product/" method="post">
         {% csrf_token %}
 
-        <strong>Please scan your barcode now:</strong>
+        <b>Please scan your barcode now:</b>
         <br/>
 
         Barcode ID: <input type="number" name="barcode_id">
