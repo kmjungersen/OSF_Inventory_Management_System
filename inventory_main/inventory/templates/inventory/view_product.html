@@ -34,7 +34,7 @@ There are {{ product.quantity }} items for this product:
     {% for item in product.item_set.all %}
 
         <li>
-            Lot #: {{ item.lot_number}}
+            <a href="{{ item.id }}">Lot #: {{ item.lot_number}}</a>
             <br/>
             Expiration Date: {{ item.expiration_date }}
             <br/>

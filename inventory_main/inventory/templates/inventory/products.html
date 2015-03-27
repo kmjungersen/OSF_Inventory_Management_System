@@ -34,7 +34,7 @@
 
                 <ul>
                     {% for item in product.item_set.all %}
-                    <li>{{ item }}</li>
+                    <li><a href="view_item/{{ product.barcode_id }}/{{ item.id }}">{{ item }}</a> </li>
                     {% endfor %}
                 </ul>
 
