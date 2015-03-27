@@ -32,6 +32,10 @@ textarea {
     margin-bottom: 20px;
 }
 
+sh {
+    font-weight: bold;
+    text-decoration: underline;
+}
 /*input.ditto {*/
     /*margin-bottom: 20px;*/
 /*}*/
