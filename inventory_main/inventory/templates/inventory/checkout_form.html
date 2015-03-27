@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Item Checkout</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'inventory/site.css' %}">
+    <script src="{% static 'inventory/elements.js' %}"></script>
+
+</head>
+<body>
+
+    <h2>Checkout {{ item }}?</h2>
+
+    <form action="checkout/" method="POST" >
+        {% csrf_token %}
+
+        <input type="submit" value="Checkout">
+
+    </form>
+
+</body>
+</html>
