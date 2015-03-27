@@ -1,0 +1,55 @@
+<head>
+    <title>View Product</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'inventory/site.css' %}">
+    <script src="{% static 'inventory/elements.js' %}"></script>
+</head>
+<body>
+
+    <h2>{{ item }}</h2>
+    <br/>
+
+    <sh>Product Specific Information:</sh>
+    <br/>
+
+        <b>Barcode ID: </b>{{ item.product.barcode_id }}
+        <br/>
+
+        <b>Description: </b>{{ item.product.description }}
+        <br/>
+
+        <b>Notes: </b>{{ item.product.notes }}
+        <br/><br/>
+
+    <sh>Item Specific Information:</sh>
+    <br/>
+
+        <b>Lot #: </b>{{ item.lot_number }}
+        <br/>
+
+        <b>Expiration Date: </b>{{ item.expiration_date }}
+        <br/>
+
+        <b>Cost : $</b>{{ item.cost }}
+        <br/><br/>
+
+    <sh>Location:</sh>
+    <br/>
+
+        <b>Room: </b>{{ item.location_room }}
+        <br/>
+
+        <b>Unit: </b>{{ item.location_unit }}
+        <br/>
+
+        <b>Shelf: </b>{{ item.location_shelf }}
+        <br/>
+
+
+    <a href="checkout_form">Checkout this item</a>
+    <br/><br/>
+
+    <a href="javascript:history.back()">Go Back</a>
+        <br/>
+
+</body>
