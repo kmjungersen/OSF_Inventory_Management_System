@@ -26,11 +26,31 @@ class Product(models.Model):
 
     @property
     def quantity(self):
-        return len(self.item_set.all())
+
+        item_set = self.item_set.all()
+        quantity = len(item_set)
+
+        return quantity
 
     # def update_quantity(self):
     #     self.quantity = len(self.item_set.all())
     #     return self.quantity
+
+    @property
+    def items_checked_out(self):
+
+        item_set = self.item_set.all()
+
+        quantity_checked_out = 0
+
+        for item in item_set:
+
+            if not item.checked_in:
+
+                quantity_checked_out += 1
+
+        return quantity_checked_out
+
 
     @property
     def average_cost(self):
@@ -42,7 +62,7 @@ class Product(models.Model):
         for item in item_set:
             total_cost += item.cost
 
-        quantity = self._update_quantity()
+        quantity = self.quantity
 
         average_item_cost = total_cost / quantity
 
@@ -53,7 +73,9 @@ class Item(models.Model):
     product = models.ForeignKey(Product)
     # distributor = models.ForeignKey(Supplier)
 
+    #TODO fix this too
     item_number = models.BigIntegerField(default=0)
+    checked_in = models.BooleanField(default=True)
 
     default_expiration = timedelta(days=DEFAULT_EXPIRATION) + datetime.now()
     expiration_date = models.DateField(default=default_expiration)
@@ -68,7 +90,7 @@ class Item(models.Model):
 
     def __str__(self):
 
-        something = '{product} with lot #: {number}'.format(
+        something = '{product} with lot #{number}'.format(
             product=self.product.name,
             number=str(self.lot_number)
         )
