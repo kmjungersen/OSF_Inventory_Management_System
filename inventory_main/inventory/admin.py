@@ -23,13 +23,28 @@ class ProductAdmin(admin.ModelAdmin):
     ]
 
     inlines = [ItemsInLine]
-    search_fields = ['name', 'barcode_id', 'product_number']
+    search_fields = [
+        'name',
+        'barcode_id',
+        'product_number',
+    ]
 
+    list_display = ('name', 'quantity', 'items_checked_out')
 
 
 class ItemAdmin(admin.ModelAdmin):
 
-    list_display = ('item_number', 'lot_number', 'expiration_date')
+    list_display = ('product', 'lot_number', 'expiration_date')
+
+    fieldsets = [
+        (None, {'fields': ['product', 'checked_in']}),
+        ('Item Details', {
+            'fields': ['lot_number', 'cost']
+        }),
+        ('Location Information', {
+            'fields': ['location_room', 'location_unit', 'location_shelf']
+        })
+    ]
 
 
 
