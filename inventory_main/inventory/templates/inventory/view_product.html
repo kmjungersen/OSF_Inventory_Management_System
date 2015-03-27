@@ -40,8 +40,21 @@ There are {{ product.quantity }} items for this product:
             <br/>
             Cost: {{ item.cost }}
             <br/>
+            Location info:
+            <br/>
+            <ul>
+                <li>Room: {{ item.location_room }}</li>
+                <li>Unit: {{ item.location_unit }}</li>
+                <li>Shelf: {{ item.location_shelf }}</li>
+            </ul>
         </li>
+        <br/>
     {% endfor %}
 </ul>
+
+    <br/><br/>
+    <a href="javascript:history.back()">Go Back</a>
+    <br/>
+
 </body>
 
