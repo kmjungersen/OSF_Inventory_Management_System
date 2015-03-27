@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Checked Out Items</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'inventory/site.css' %}">
+</head>
+<body>
+
+    <h2>Checked Out Items</h2>
+        <br/>
+
+    {% for product in products %}
+
+            <h3>---> <a href="view_product/{{ product.barcode_id }}/">{{ product }}</a></h3>
+
+                {% if product.items_checked_out == 1  %}
+                There is {{ product.items_checked_out }} item checked out for this product
+
+                {% elif product.items_checked_out > 1 %}
+                There are {{ product.items_checked_out }} items checked out for this product
+
+                {% endif %}
+
+                    <ul>
+                        {% for item in product.item_set.all %}
+                        foo
+
+                            {% if item.checked_out %}
+                                <li>{{ item }}</li>
+                            {% endif %}
+
+                        {% endfor %}
+                    </ul>
+
+    {% endfor %}
+
+</body>
+</html>
