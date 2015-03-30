@@ -26,6 +26,7 @@ def add_product_form(request, error_message=None):
         'error_messsage': error_message,
     })
 
+
 def add_product_form_from_item(request):
 
     return redirect('add_product_form')
@@ -74,6 +75,8 @@ def lookup_product(request, form_origin):
         if form_origin == 'product':
 
             data = query_upc_database(barcode_id)
+
+            print(data)
 
             if data:
 
@@ -173,22 +176,32 @@ def view_item(request, barcode_id, item_id):
     })
 
 
-def checkout_form(request, barcode_id, item_id):
+def checkout_form(request, barcode_id, item_id, action):
 
     item = lookup_item(barcode_id, item_id)
 
     return render(request, 'inventory/checkout_form.html', {
         'item': item,
+        'checkout': action,
     })
 
-def checkout(request, barcode_id, item_id):
+
+def checkout(request, barcode_id, item_id, action):
 
     item = lookup_item(barcode_id, item_id)
 
-    item.checked_in = False
+    if action == 'checkout':
+
+        item.checked_in = False
+
+    elif action == 'checkin':
+
+        item.checked_in = True
 
     item.save()
 
-    return redirect('index')
+    return redirect('view_item', barcode_id=barcode_id, item_id=item_id)
 
+
+# def checkin
 

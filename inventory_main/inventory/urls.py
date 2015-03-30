@@ -12,8 +12,8 @@ urlpatterns = patterns('',
     url(r'view_item/(?P<barcode_id>\w+)/(?P<item_id>\w+)/$', views.view_item, name='view_item'),
     url(r'view_product/(?P<barcode_id>\w+)/(?P<item_id>\w+)/$', views.view_item, name='view_item'),
 
-    url(r'(?P<barcode_id>\w+)/(?P<item_id>\w+)/checkout_form/$', views.checkout_form, name='checkout_form'),
-    url(r'(?P<barcode_id>\w+)/(?P<item_id>\w+)/checkout_form/checkout/$', views.checkout, name='checkout'),
+    url(r'(?P<barcode_id>\w+)/(?P<item_id>\w+)/(?P<action>\w+)/$', views.checkout_form, name='checkout_form'),
+    url(r'(?P<barcode_id>\w+)/(?P<item_id>\w+)/(?P<action>\w+)/go/$', views.checkout, name='checkout'),
 
     url(r'add_product/$', views.add_product, name='add_product'),
     url(r'add_item/$', views.add_item, name='add_item'),

@@ -10,14 +10,14 @@
 </head>
 <body>
 
-    <h2>Checkout {{ item }}?</h2>
+        <h2>{{ checkout  }} {{ item }}?</h2>
 
-    <form action="checkout/" method="POST" >
-        {% csrf_token %}
+        <form action="go/" method="POST" >
+            {% csrf_token %}
 
-        <input type="submit" value="Checkout">
+            <input type="submit" value="{{ checkout }}">
 
-    </form>
+        </form>
 
 </body>
 </html>
