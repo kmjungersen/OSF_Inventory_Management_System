@@ -9,6 +9,22 @@
     <h2>{{ item }}</h2>
     <br/>
 
+    {% if item.checked_out %}
+
+        <sh>This item is currently checked out.</sh>
+        <br/>
+        <a href="checkin/">Check-in this item</a>
+
+    {% else %}
+
+        <sh>This item is currently checked in.</sh>
+        <br/>
+        <a href="checkout/">Check-out this item</a>
+
+    {% endif %}
+
+    <br/><br/>
+
     <sh>Product Specific Information:</sh>
     <br/>
 
@@ -43,7 +59,7 @@
         <br/>
 
         <b>Shelf: </b>{{ item.location_shelf }}
-        <br/>
+        <br/><br/>
 
 
     <a href="checkout_form">Checkout this item</a>
