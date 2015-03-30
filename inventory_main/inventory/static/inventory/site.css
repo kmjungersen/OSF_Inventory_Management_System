@@ -36,6 +36,19 @@ sh {
     font-weight: bold;
     text-decoration: underline;
 }
+
+a:link {
+    color: #0066FF;
+}
+
+a:visited {
+    color: #0066FF;
+}
+
+a:hover {
+    color: #FF5050;
+ }
+
 /*input.ditto {*/
     /*margin-bottom: 20px;*/
 /*}*/
