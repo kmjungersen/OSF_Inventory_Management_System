@@ -20,9 +20,25 @@
     <a href="add_item_form">Add a new item</a>
         <br/>
     <a href="view_checked_out_items">View checked out items</a>
+        <br/>
+
+    <div class="container">
+        <div class="panel-group" id="accordion">
 
     {% for product in products %}
-        <h3>---> <a href="view_product/{{ product.barcode_id }}/">{{ product }}</a></h3>
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#{{ product.id }}">
+                        {{ product }}<br/>({{ product.quantity }} item(s))
+                    </a>
+                </h4>
+            </div>
+
+            <div id="{{ product.id }}" class="panel-collapse collapse">
+                <div class="panel-body">
 
             {% if product.quantity == 1  %}
             There is {{ product.quantity }} item for this product:
@@ -42,8 +58,12 @@
                     <li><a href="view_item/{{ product.barcode_id }}/{{ item.id }}">{{ item }}</a> </li>
                     {% endfor %}
                 </ul>
-
+            </div></div>
 
     {% endfor %}
+
+        </div>
+    </div>
+
 </body>
 </html>
