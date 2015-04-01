@@ -81,3 +81,35 @@ def lookup_item(barcode_id, item_id):
     item = product.item_set.get(id__exact=item_id)
 
     return item
+
+def lookup_product(barcode_id, new_product=False):
+
+    product_found = False
+    product_name = ''
+    description = ''
+    # error_message = ''
+
+    try:
+        product = Product.objects.get(barcode_id__exact=barcode_id)
+
+        product_found = True
+        product_name = product.name
+        description = product.description
+
+        return product
+
+    except Exception:
+
+        if new_product:
+
+            data = query_upc_database(barcode_id)
+
+            print(data)
+
+            if data:
+
+                product_name = data[0].get('productname')
+
+                return product_name
+
+    return None

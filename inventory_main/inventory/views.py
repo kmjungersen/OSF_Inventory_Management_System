@@ -45,19 +45,59 @@ def add_product(request):
 
     return redirect('index')
 
-
-def lookup_product(request, form_origin):
-
-    barcode_id = request.POST['barcode_id']
-
-    if barcode_id == '':
-
-        return redirect('add_product_form')
-
-    template = 'inventory/add_{origin}.html'.format(
-        origin=form_origin,
-    )
-
+#
+# def lookup_product(request, form_origin):
+#
+#     barcode_id = request.POST['barcode_id']
+#
+#     if barcode_id == '':
+#
+#         return redirect('add_product_form')
+#
+#     template = 'inventory/add_{origin}.html'.format(
+#         origin=form_origin,
+#     )
+#
+#     product_found = False
+#     product_name = ''
+#     description = ''
+#     # error_message = ''
+#
+#     try:
+#         product = Product.objects.get(barcode_id__exact=barcode_id)
+#
+#         product_found = True
+#         product_name = product.name
+#         description = product.description
+#
+#     except Exception:
+#
+#         if form_origin == 'product':
+#
+#             data = query_upc_database(barcode_id)
+#
+#             print(data)
+#
+#             if data:
+#
+#                 # ipdb.set_trace()
+#
+#                 # TODO return a selection of possible items and an "is this your item?" dialogue
+#                 # TODO fix pyscan to be better
+#
+#                 # product_found = True
+#
+#                 product_name = data[0].get('productname')
+#                 # description = data[0].get('description')
+#
+#     return render(request, template, {
+#         'first_pass': False,
+#         'product_found': product_found,
+#         'barcode_id': barcode_id,
+#         'product_name': product_name,
+#         'description': description,
+#         # 'error_message': error_message,
+#     })
     product_found = False
     product_name = ''
     description = ''
