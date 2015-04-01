@@ -24,16 +24,16 @@
 
 {% if first_pass %}
 
-    <form action="item/lookup_product/" method="post">
+    <form action="lookup/" method="post">
         {% csrf_token %}
 
         <b>Please scan your barcode now:</b>
         <br/>
 
-        Barcode ID: <input type="number" name="barcode_id">
+        Barcode ID: <input type="number" name="barcode_id" autofocus="true">
         <br/>
 
-        <input type="submit" value="submit" />
+        <input type="submit" value="Submit" />
 
     </form>
 
@@ -47,7 +47,7 @@
         Barcode ID: <input type="number" name="barcode_id" value="{{ barcode_id }}">
         <br/>
 
-        Name: <input type="text" name="name" value="{{ product_name }}">
+        Name: <input type="text" name="name" value="{{ product_name }}" autofocus="true">
         <br/>
 
         Cost: <input type="number" name="cost">
@@ -64,7 +64,7 @@
 
     {% else %}
 
-        The product associated with this barcode has not been added.  Please do so <a href="add_product_form/from_item/">here.</a>
+        There were no products found that match barcode #{{ barcode_id }}.  Please first add it <a href="/inventory/add_product/{{ barcode_id }}">here.</a>
         <br/>
 
     {% endif %}
