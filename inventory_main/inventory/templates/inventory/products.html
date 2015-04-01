@@ -3,24 +3,31 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Inventory</title>
-    {% load staticfiles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'inventory/site.css' %}">
-    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/flatly/bootstrap.min.css" rel="stylesheet">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!--#HEADER START#-->
+
+{% load staticfiles %}
+
+<link href="{% static 'inventory/site.css' %}" rel="stylesheet" type="text/css">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/flatly/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="{% static 'inventory/elements.js' %}"></script>
+
+<!--#HEADER FINISH#-->
 
 </head>
 <body>
 
     <h2>Inventory</h2>
         <br/>
-    <a href="add_product_form">Add a new product</a>
+    <a href="add_product/" class="in_line_link">Add a new product</a>
         <br/>
-    <a href="add_item_form">Add a new item</a>
+    <a href="add_item/" class="in_line_link">Add a new item</a>
         <br/>
-    <a href="view_checked_out_items">View checked out items</a>
-        <br/>
+    <a href="view_checked_out_items" class="in_line_link">View checked out items</a>
+        <br/><br/>
 
     <div class="container">
         <div class="panel-group" id="accordion">
