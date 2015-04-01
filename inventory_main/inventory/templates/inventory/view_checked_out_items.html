@@ -23,30 +23,49 @@
     <h2>Checked Out Items</h2>
         <br/>
 
+
+    <div class="container">
+        <div class="panel-group" id="accordion">
+
     {% for product in products %}
 
-            <h3>---> <a href="view_product/{{ product.barcode_id }}/">{{ product }}</a></h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#{{ product.id }}">
+                        {{ product }}<br/>({{ product.items_checked_out }} item(s))
+                    </a>
+                </h4>
+
+            </div>
+
+            <div id="{{ product.id }}" class="panel-collapse collapse">
+                <div class="panel-body">
 
                 {% if product.items_checked_out == 1  %}
-                There is {{ product.items_checked_out }} item checked out for this product
+                There is {{ product.items_checked_out }} item checked out for <a href="view_product/{{ product.barcode_id }}">this product</a>:
 
                 {% elif product.items_checked_out > 1 %}
-                There are {{ product.items_checked_out }} items checked out for this product
+                There are {{ product.items_checked_out }} items checked out for <a href="view_product/{{ product.barcode_id }}">this product</a>:
 
                 {% endif %}
 
-                    <ul>
-                        {% for item in product.item_set.all %}
-                        foo
+                <ul>
+                    {% for item in product.item_set.all %}
+                    <li><a href="view_item/{{ product.barcode_id }}/{{ item.id }}">{{ item }}</a> </li>
+                    {% endfor %}
+                </ul>
 
-                            {% if item.checked_out %}
-                                <li>{{ item }}</li>
-                            {% endif %}
-
-                        {% endfor %}
-                    </ul>
+                </div>
+            </div>
 
     {% endfor %}
+
+    </div>
+    </div>
+    </div>
+
 
 </body>
 </html>
