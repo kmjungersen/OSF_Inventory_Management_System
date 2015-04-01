@@ -55,16 +55,24 @@ class Product(models.Model):
     @property
     def average_cost(self):
 
-        item_set = self.item_set.all()
+        if self.quantity > 0:
 
-        total_cost = 0
+            item_set = self.item_set.all()
 
-        for item in item_set:
-            total_cost += item.cost
+            total_cost = 0
 
-        quantity = self.quantity
+            for item in item_set:
+                total_cost += item.cost
 
-        average_item_cost = total_cost / quantity
+            quantity = self.quantity
+
+            average_item_cost_raw = total_cost / quantity
+
+        else:
+
+            average_item_cost_raw = 0
+
+        average_item_cost = '{:20,.2f}'.format(average_item_cost_raw)
 
         return average_item_cost
 
@@ -96,6 +104,13 @@ class Item(models.Model):
         )
 
         return something
+
+    @property
+    def formatted_cost(self):
+
+        cost = '${:20,.2f}'.format(self.cost)
+
+        return cost
 
     @property
     def location(self):
