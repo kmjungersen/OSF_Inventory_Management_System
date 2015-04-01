@@ -50,7 +50,7 @@ There are {{ product.quantity }} items for this product:
             <br/>
             Expiration Date: {{ item.expiration_date }}
             <br/>
-            Cost: {{ item.cost }}
+            Cost: {{ item.formatted_cost }}
             <br/>
             Location info:
             <br/>
@@ -63,6 +63,9 @@ There are {{ product.quantity }} items for this product:
         <br/>
     {% endfor %}
 </ul>
+
+<br/>
+<a href="add_item/">Add an item</a>
 
     <br/><br/>
     <a href="javascript:history.back()">Go Back</a>
