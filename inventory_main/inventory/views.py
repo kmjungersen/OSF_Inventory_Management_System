@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from datetime import datetime
-from inventory.utils import query_upc_database, lookup_item
+from inventory.utils import query_upc_database, lookup_item, lookup_product
 
 from inventory.models import Product, Item
 
@@ -19,14 +19,46 @@ def index(request):
     })
 
 
-def add_product_form(request, error_message=None):
+def add_product_form(request, barcode_id=None, error_message=None):
+
+    product_name = ''
+    description = ''
+    first_pass = True
+
+    if barcode_id:
+
+        first_pass = False
+
+        product = lookup_product(barcode_id, new_product=True)
+
+        if product:
+
+            if type(product) == str:
+
+                product_name = product
+
+            else:
+
+                product_name = product.name
+                description = product.description
+
+    else:
+
+        barcode_id = request.POST.get('barcode_id')
+
+        if barcode_id:
+
+            return redirect('add_product', barcode_id=barcode_id)
 
     return render(request, 'inventory/add_product.html', {
-        'first_pass': True,
+        'first_pass': first_pass,
         'error_messsage': error_message,
+        'barcode_id': barcode_id,
+        'product_name': product_name,
+        'description': description,
     })
 
-
+#TODO - get rid of this
 def add_product_form_from_item(request):
 
     return redirect('add_product_form')
@@ -98,56 +130,43 @@ def add_product(request):
 #         'description': description,
 #         # 'error_message': error_message,
 #     })
+
+
+def add_item_form(request, barcode_id=None, error_message=None):
+
+    first_pass = True
     product_found = False
     product_name = ''
     description = ''
-    # error_message = ''
 
-    try:
-        product = Product.objects.get(barcode_id__exact=barcode_id)
+    if barcode_id:
 
-        product_found = True
-        product_name = product.name
-        description = product.description
+        first_pass = False
 
-    except Exception:
+        product = lookup_product(barcode_id)
 
-        if form_origin == 'product':
+        if product:
 
-            data = query_upc_database(barcode_id)
+            product_found = True
 
-            print(data)
+            product_name = product.name
+            description = product.description
 
-            if data:
+    else:
 
-                # ipdb.set_trace()
+        barcode_id = request.POST.get('barcode_id')
 
-                # TODO return a selection of possible items and an "is this your item?" dialogue
-                # TODO fix pyscan to be better
+        if barcode_id:
 
-                # product_found = True
-
-                product_name = data[0].get('productname')
-                # description = data[0].get('description')
-
-    return render(request, template, {
-        'first_pass': False,
-        'product_found': product_found,
-        'barcode_id': barcode_id,
-        'product_name': product_name,
-        'description': description,
-        # 'error_message': error_message,
-    })
-
-
-def add_item_form(request):
-
-    # if request.POST.get('product_found'):
-    #
-    #     print('foooo')
+            return redirect('add_item', barcode_id=barcode_id)
 
     return render(request, 'inventory/add_item.html', {
-        'first_pass': True,
+        'first_pass': first_pass,
+        'barcode_id': barcode_id,
+        'product_found': product_found,
+        'product_name': product_name,
+        'description': description,
+        'error_message': error_message,
     })
 
 
