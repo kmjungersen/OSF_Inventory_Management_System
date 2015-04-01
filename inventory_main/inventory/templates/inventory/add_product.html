@@ -24,13 +24,14 @@
 
 {% if first_pass %}
 
-    <form action="product/lookup_product/" method="post">
+    <form action="lookup/" method="post">
+
         {% csrf_token %}
 
         <b>Please scan your barcode now:</b>
         <br/>
 
-        Barcode ID: <input type="number" name="barcode_id" autofocus="true">
+        Barcode ID: <input id="barcode_id" type="number" name="barcode_id" autofocus="true">
         <br/>
 
         <input type="submit" value="Submit" />
