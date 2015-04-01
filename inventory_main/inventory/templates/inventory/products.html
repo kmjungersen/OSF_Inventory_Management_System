@@ -35,42 +35,43 @@
     {% for product in products %}
 
         <div class="panel panel-default">
-
             <div class="panel-heading">
+
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#{{ product.id }}">
                         {{ product }}<br/>({{ product.quantity }} item(s))
                     </a>
                 </h4>
+
             </div>
 
             <div id="{{ product.id }}" class="panel-collapse collapse">
                 <div class="panel-body">
 
-            {% if product.quantity == 1  %}
-            There is {{ product.quantity }} item for this product:
+                {% if product.quantity == 1  %}
+                There is {{ product.quantity }} item for <a href="view_product/{{ product.barcode_id }}">this product</a>:
 
-            {% elif product.quantity == 0 %}
-            (There are no items for this product)
+                {% elif product.quantity == 0 %}
+                (There are no items for <a href="view_product/{{ product.barcode_id }}">this product</a>)
 
-            {% elif product.quantity > 1 %}
-            There are {{ product.quantity }} items for this product:
+                {% elif product.quantity > 1 %}
+                There are {{ product.quantity }} items for <a href="view_product/{{ product.barcode_id }}">this product</a>:
 
-            {% endif %}
-
-            <!--<h4>Items for this product</h4>-->
+                {% endif %}
 
                 <ul>
                     {% for item in product.item_set.all %}
                     <li><a href="view_item/{{ product.barcode_id }}/{{ item.id }}">{{ item }}</a> </li>
                     {% endfor %}
                 </ul>
-            </div></div>
+
+                </div>
+            </div>
 
     {% endfor %}
 
-        </div>
     </div>
-
+    </div>
+    </div>
 </body>
 </html>
