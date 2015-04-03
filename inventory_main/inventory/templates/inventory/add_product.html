@@ -42,7 +42,7 @@
 
     {% if product_found %}
 
-        <h4>This product already exists!</h4>
+        <h4>This product already exists <a href="/inventory/view_product/{{ barcode_id }}">here:</a></h4>
         <br/>
 
         Barcode ID: {{ barcode_id }}
@@ -54,7 +54,7 @@
         Description: {{ description }}
         <br/><br/>
 
-        <a href="javascript:history.back()">Go Back</a>
+        <a href="/inventory/add_item/{{ barcode_id }}">Add an item instead?</a>
         <br/>
 
     {% else %}
@@ -62,7 +62,7 @@
     <b>Please enter the product information below: </b>
         <br/>
 
-    <form action="add_product/" method="post">
+    <form action="go/" method="post">
         {% csrf_token %}
 
         Barcode ID: <input type="number" name="barcode_id" value="{{ barcode_id }}">
@@ -71,7 +71,7 @@
         Product Name: <input type="text" name="product_name" value="{{ product_name }}" autofocus="true">
         <br/>
 
-        Description: <textarea rows="3" name="description" placeholder="foo"></textarea>
+        Description: <textarea rows="3" name="description" ></textarea>
         <br/>
 
         Notes: <textarea rows="3" name="notes"></textarea>

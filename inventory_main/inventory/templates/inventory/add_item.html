@@ -41,23 +41,46 @@
 
     {% if product_found %}
 
-        <form action="add_item/" method="post">
+        <form action="go/" method="post">
         {% csrf_token %}
 
-        Barcode ID: <input type="number" name="barcode_id" value="{{ barcode_id }}">
+        <sh>Product Specific Information:</sh>
+        <br/>
+            <b>Name: </b>{{ product.name }}
+            <br/>
+
+            <b>Barcode ID: </b>{{ product.barcode_id }}
+            <br/>
+
+            <b>Description: </b>{{ product.description }}
+            <br/>
+
+            <b>Notes: </b>{{ product.notes }}
+            <br/><br/>
+
+        <sh>Item Specific Information:</sh>
         <br/>
 
-        Name: <input type="text" name="name" value="{{ product_name }}" autofocus="true">
+            <b>Cost: </b><input type="number" name="cost">
+            <br/>
+
+            <b>Number: </b><input type="number" name="lot_number">
+            <br/>
+
+            <b>Expiration Date (defaults to {{ default_expiration }} days): </b><input type="date" name="expiration_date">
+            <br/><br/>
+
+        <sh>Location: </sh>
         <br/>
 
-        Cost: <input type="number" name="cost">
-        <br/>
+            <b>Room: </b><input type="text" name="location_room">
+            <br/>
 
-        Lot Number: <input type="number" name="lot_number">
-        <br/>
+            <b>Unit: </b><input type="text" name="location_unit">
+            <br/>
 
-        Expiration Date (defaults to {{ default_expiration }} days): <input type="date" name="expiration_date">
-        <br/>
+            <b>Shelf: </b><input type="text" name="location_shelf">
+            <br/><br/>
 
         <input type="submit" value="Submit">
         </form>
