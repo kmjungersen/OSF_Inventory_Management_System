@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Add Room</title>
+
+    <!--#HEADER START#-->
+    <!--#HEADER END#-->
+
+</head>
+<body>
+
+    <h2>Add New Location - {{ location_type }}</h2>
+    <br/>
+
+    <form action="add_{{ location_type }}/">
+
+        {% csrf_token %}
+
+        {% if location_type == "room" %}
+
+            <b>Room number: </b><input type="text" name="room_id" autofocus="True">
+            <br/>
+
+            <b>Room name: </b><input type="text" name="name">
+            <br/>
+
+        {% elif location_type == "unit" %}
+
+            <b>Room: </b>
+                <select name="room">
+                    {% for room in rooms %}
+
+                        <option value="{{ room }}">{{ room }}</option>
+
+                    {% endfor %}
+                </select>
+
+            <b>Unit number: </b><input type="text" name="unit_number" autofocus="True">
+            <br/>
+
+            <b>Unit Type: </b><input type="text" name="type">
+            <br/>
+
+            <b>Unit Temperature: </b><input type="text" name="temperature">
+            <br/>
+
+        
+
+
+
+        <input type="submit" value="Submit">
+
+    </form>
+
+</body>
+</html>
