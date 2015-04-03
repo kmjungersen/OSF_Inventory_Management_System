@@ -4,6 +4,22 @@ from inventory.local import DEFAULT_EXPIRATION
 
 # Create your models here.
 
+class Distributor(models.Model):
+    distributor_name = models.CharField(max_length=200)
+
+    url = models.URLField()
+
+    supplier_notes = models.TextField(null=True)
+
+    def __str__(self):
+        return self.distributor_name
+
+    def item_count(self):
+
+        count = len(self.objects.all())
+
+        return count
+
 
 class Product(models.Model):
     barcode_id = models.BigIntegerField()
@@ -16,7 +32,6 @@ class Product(models.Model):
 
     now = datetime.now()
     date_first_added = models.DateTimeField('date added', default=now)
-
 
     def __str__(self):
         return self.name
@@ -79,7 +94,7 @@ class Product(models.Model):
 
 class Item(models.Model):
     product = models.ForeignKey(Product)
-    # distributor = models.ForeignKey(Supplier)
+    distributor = models.ForeignKey(Distributor)
 
     #TODO fix this too
     item_number = models.BigIntegerField(default=0)
@@ -124,20 +139,3 @@ class Item(models.Model):
         return location
 
 
-# class Supplier(models.Model):
-#     supplier_name = models.CharField(max_length=200)
-#
-#     url = models.URLField()
-#
-#     supplier_notes = models.TextField(null=True)
-#
-#     def __str__(self):
-#         return self.supplier_name
-#
-#     def _return_quantity(self):
-#         count = 0
-#
-#         for item in self.objects.all():
-#             count += 1
-#
-#         return count
