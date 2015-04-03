@@ -139,3 +139,98 @@ class Item(models.Model):
         return location
 
 
+class LocationRoom(models.Model):
+
+    room_id = models.CharField(max_length=200)
+
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def item_count(self):
+
+        count = len(self.item_set.all())
+
+        return count
+
+    @property
+    def items(self):
+
+        items = self.item_set.all()
+
+        return items
+
+    @property
+    def unit_count(self):
+
+        count = len(self.unit_set.all())
+
+        return count
+
+    @property
+    def units(self):
+
+        units = self.unit_set.all()
+
+        return units
+
+
+class LocationUnit(models.Model):
+
+    unit_id = models.CharField(max_length=200)
+
+    room = models.ForeignKey(LocationRoom)
+
+    type = models.CharField(max_length=200)
+    temperature = models.CharField(max_length=200, null=True)
+
+    @property
+    def item_count(self):
+
+        count = len(self.item_set.all())
+
+        return count
+
+    @property
+    def items(self):
+
+        items = self.item_set.all()
+
+        return items
+
+    @property
+    def shelf_count(self):
+
+        count = len(self.locationshelf_set.all())
+
+        return count
+
+    @property
+    def shelves(self):
+
+        shelves = self.locationshelf_set.all()
+
+        return shelves
+
+
+class LocationShelf(models.Model):
+
+    shelf_id = models.CharField(max_length=200)
+
+    unit = models.ForeignKey(LocationUnit)
+
+    @property
+    def item_count(self):
+
+        count = len(self.item_set.all())
+
+        return count
+
+    @property
+    def items(self):
+
+        items = self.item_set.all()
+
+        return items
