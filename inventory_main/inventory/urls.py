@@ -19,20 +19,20 @@ urlpatterns = patterns('',
     url(r'view_item/(?P<barcode_id>\w+)/(?P<item_id>\w+)/(?P<action>\w+)/$', views.checkout_form, name='checkout_form'),
     url(r'view_item/(?P<barcode_id>\w+)/(?P<item_id>\w+)/(?P<action>\w+)/go/$', views.checkout, name='checkout'),
 
-    url(r'add_product/$', views.add_product_form, name='add_product_form'),
+    url(r'add_product/$', views.add_product_form, name='add_product_initial'),
     url(r'add_product/lookup/$', views.add_product_form, name='add_product_lookup'),
-    url(r'add_product/(?P<barcode_id>\w+)/$', views.add_product_form, name='add_product'),
+    url(r'add_product/(?P<barcode_id>\w+)/$', views.add_product_form, name='add_product_form'),
+    url(r'add_product/(?P<barcode_id>\w+)/go/$', views.add_product, name='add_product'),
 
-    url(r'add_item/$', views.add_item_form, name='add_item_form'),
+
+    url(r'add_item/$', views.add_item_form, name='add_item_initial'),
     url(r'add_item/lookup/$', views.add_item_form, name='add_item_lookup'),
-    url(r'add_item/(?P<barcode_id>\w+)/$', views.add_item_form, name='add_item'),
+    url(r'add_item/(?P<barcode_id>\w+)/$', views.add_item_form, name='add_item_form'),
+    url(r'add_item/(?P<barcode_id>\w+)/go/$', views.add_item, name='add_item'),
 
     # url(r'(?P<form_origin>\w+)/lookup_product/$', views.lookup_product, name='lookup_product'),
 
-    url(r'home/$', views.home, name='home'),
 
-
-    url(r'add_product_from_item/$', views.add_product_form_from_item),
 
 
 )
