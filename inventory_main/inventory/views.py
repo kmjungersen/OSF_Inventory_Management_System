@@ -4,6 +4,7 @@ from datetime import datetime
 from inventory.utils import query_upc_database, lookup_item, lookup_product
 
 from inventory.models import Product, Item
+from inventory.local import *
 
 
 import ipdb
@@ -24,6 +25,7 @@ def add_product_form(request, barcode_id=None, error_message=None):
     product_name = ''
     description = ''
     first_pass = True
+    product_found = False
 
     if barcode_id:
 
@@ -41,6 +43,7 @@ def add_product_form(request, barcode_id=None, error_message=None):
 
                 product_name = product.name
                 description = product.description
+                product_found = True
 
     else:
 
@@ -48,7 +51,7 @@ def add_product_form(request, barcode_id=None, error_message=None):
 
         if barcode_id:
 
-            return redirect('add_product', barcode_id=barcode_id)
+            return redirect('add_product_form', barcode_id=barcode_id)
 
     return render(request, 'inventory/add_product.html', {
         'first_pass': first_pass,
@@ -56,88 +59,34 @@ def add_product_form(request, barcode_id=None, error_message=None):
         'barcode_id': barcode_id,
         'product_name': product_name,
         'description': description,
+        'product_found': product_found,
     })
 
-#TODO - get rid of this
-def add_product_form_from_item(request):
 
-    return redirect('add_product_form')
-
-
-def add_product(request):
+def add_product(request, barcode_id):
     # ipdb.set_trace()
 
+    name = request.POST['product_name']
+    description = request.POST['description']
+    notes = request.POST['notes']
+
     p = Product(
-        name=request.POST['product_name'],
-        barcode_id=request.POST['barcode_id'],
-        description=request.POST['']
+        barcode_id=barcode_id,
+        name=name,
+        description=description,
+        notes=notes,
     )
 
     p.save()
 
-    return redirect('index')
-
-#
-# def lookup_product(request, form_origin):
-#
-#     barcode_id = request.POST['barcode_id']
-#
-#     if barcode_id == '':
-#
-#         return redirect('add_product_form')
-#
-#     template = 'inventory/add_{origin}.html'.format(
-#         origin=form_origin,
-#     )
-#
-#     product_found = False
-#     product_name = ''
-#     description = ''
-#     # error_message = ''
-#
-#     try:
-#         product = Product.objects.get(barcode_id__exact=barcode_id)
-#
-#         product_found = True
-#         product_name = product.name
-#         description = product.description
-#
-#     except Exception:
-#
-#         if form_origin == 'product':
-#
-#             data = query_upc_database(barcode_id)
-#
-#             print(data)
-#
-#             if data:
-#
-#                 # ipdb.set_trace()
-#
-#                 # TODO return a selection of possible items and an "is this your item?" dialogue
-#                 # TODO fix pyscan to be better
-#
-#                 # product_found = True
-#
-#                 product_name = data[0].get('productname')
-#                 # description = data[0].get('description')
-#
-#     return render(request, template, {
-#         'first_pass': False,
-#         'product_found': product_found,
-#         'barcode_id': barcode_id,
-#         'product_name': product_name,
-#         'description': description,
-#         # 'error_message': error_message,
-#     })
+    return redirect('view_product', barcode_id=barcode_id)
 
 
 def add_item_form(request, barcode_id=None, error_message=None):
 
     first_pass = True
     product_found = False
-    product_name = ''
-    description = ''
+    product = None
 
     if barcode_id:
 
@@ -149,33 +98,32 @@ def add_item_form(request, barcode_id=None, error_message=None):
 
             product_found = True
 
-            product_name = product.name
-            description = product.description
-
     else:
 
         barcode_id = request.POST.get('barcode_id')
 
         if barcode_id:
 
-            return redirect('add_item', barcode_id=barcode_id)
+            return redirect('add_item_form', barcode_id=barcode_id)
 
     return render(request, 'inventory/add_item.html', {
         'first_pass': first_pass,
-        'barcode_id': barcode_id,
         'product_found': product_found,
-        'product_name': product_name,
-        'description': description,
+        'product': product,
         'error_message': error_message,
+        'default_expiration': DEFAULT_EXPIRATION,
     })
 
 
-def add_item(request):
+def add_item(request, barcode_id):
 
-    barcode_id = request.POST.get('barcode_id')
     lot_number = request.POST.get('lot_number')
     cost = request.POST.get('cost')
     expiration_date_str = str(request.POST.get('expiration_date'))
+
+    location_room = request.POST.get('location_room')
+    location_unit = request.POST.get('location_unit')
+    location_shelf = request.POST.get('location_shelf')
 
     expiration_date = datetime.strptime(expiration_date_str, '%Y-%m-%d')
 
@@ -186,16 +134,16 @@ def add_item(request):
         lot_number=lot_number,
         cost=cost,
         expiration_date=expiration_date,
+        location_room=location_room,
+        location_unit=location_unit,
+        location_shelf=location_shelf,
     )
 
     item.save()
 
-    return redirect('index')
+    item_id = item.id
 
-
-def home(request):
-
-    return redirect('index')
+    return redirect('view_item', barcode_id=barcode_id, item_id=item_id)
 
 
 def view_product(request, barcode_id):
@@ -260,7 +208,3 @@ def checkout(request, barcode_id, item_id, action):
     item.save()
 
     return redirect('view_item', barcode_id=barcode_id, item_id=item_id)
-
-
-# def checkin
-

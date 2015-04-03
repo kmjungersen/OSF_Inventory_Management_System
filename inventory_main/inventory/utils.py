@@ -31,6 +31,7 @@ def timeout(seconds=10, error_message=os.strerror(errno.ETIME)):
 
     return decorator
 
+
 # @timeout(3)
 def query_upc_database(barcode_id):
     """
