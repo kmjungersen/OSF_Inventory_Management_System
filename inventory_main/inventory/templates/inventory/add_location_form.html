@@ -22,7 +22,7 @@
             <b>Room number: </b><input type="text" name="room_id" autofocus="True">
             <br/>
 
-            <b>Room name: </b><input type="text" name="name">
+            <b>Room name: </b><input type="text" name="room_name">
             <br/>
 
         {% elif location_type == "unit" %}
@@ -39,12 +39,29 @@
             <b>Unit number: </b><input type="text" name="unit_number" autofocus="True">
             <br/>
 
-            <b>Unit Type: </b><input type="text" name="type">
+            <b>Unit Type: </b><input type="text" name="unit_type">
             <br/>
 
-            <b>Unit Temperature: </b><input type="text" name="temperature">
+            <b>Unit Temperature: </b><input type="text" name="unit_temperature">
             <br/>
 
+        {% elif location_type == "shelf" %}
+
+            <b>Room: </b>
+                <select name="room">
+                    {% for room in rooms %}
+
+                        <option value="{{ room }}">{{ room }}</option>
+
+                    {% endfor %}
+                </select>
+
+            <b>Unit: </b>
+            foooooo
+
+            <b>Shelf Number: </b><input type="text" name="shelf_number">
+
+        {% endif %}
         
 
 
