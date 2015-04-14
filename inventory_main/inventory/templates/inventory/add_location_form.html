@@ -13,11 +13,13 @@
     <h2>Add New Location - {{ location_type }}</h2>
     <br/>
 
-    <form action="add_{{ location_type }}/">
+
+
+    {% if location_type == "room" %}
+
+        <form action="go/">
 
         {% csrf_token %}
-
-        {% if location_type == "room" %}
 
             <b>Room number: </b><input type="text" name="room_id" autofocus="True">
             <br/>
@@ -25,7 +27,11 @@
             <b>Room name: </b><input type="text" name="room_name">
             <br/>
 
-        {% elif location_type == "unit" %}
+        </form>
+
+    {% elif location_type == "unit" %}
+
+        <form action="lookup">
 
             <b>Room: </b>
                 <select name="room">
