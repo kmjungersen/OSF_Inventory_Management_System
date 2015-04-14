@@ -94,7 +94,9 @@ class Product(models.Model):
 
 class Item(models.Model):
     product = models.ForeignKey(Product)
-    distributor = models.ForeignKey(Distributor)
+
+    #TODO fix this
+    distributor = models.ForeignKey(Distributor, null=True)
 
     #TODO fix this too
     item_number = models.BigIntegerField(default=0)
@@ -141,7 +143,7 @@ class Item(models.Model):
 
 class LocationRoom(models.Model):
 
-    room_id = models.CharField(max_length=200)
+    location_id = models.CharField(max_length=200)
 
     name = models.CharField(max_length=200)
 
@@ -179,7 +181,7 @@ class LocationRoom(models.Model):
 
 class LocationUnit(models.Model):
 
-    unit_id = models.CharField(max_length=200)
+    location_id = models.CharField(max_length=200)
 
     room = models.ForeignKey(LocationRoom)
 
@@ -217,7 +219,7 @@ class LocationUnit(models.Model):
 
 class LocationShelf(models.Model):
 
-    shelf_id = models.CharField(max_length=200)
+    location_id = models.CharField(max_length=200)
 
     unit = models.ForeignKey(LocationUnit)
 
