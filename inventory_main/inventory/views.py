@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from datetime import datetime
-from inventory.utils import query_upc_database, lookup_item, lookup_product
 
-from inventory.models import Product, Item
+from inventory.utils import query_upc_database, lookup_item, lookup_product
+from inventory.models import Product, Item, LocationRoom, LocationUnit, LocationShelf, Distributor
 from inventory.local import *
 
 
@@ -208,3 +208,91 @@ def checkout(request, barcode_id, item_id, action):
     item.save()
 
     return redirect('view_item', barcode_id=barcode_id, item_id=item_id)
+
+
+def add_location_form(request, location_type, room=None, unit=None, error_message=None):
+
+    if room:
+
+        if unit:
+
+            pass
+
+    return render(request, 'inventory/add_location_form.html', {
+        'location_type': location_type,
+        'room': room,
+        'unit': unit,
+        'error_message': error_message,
+    })
+
+
+# from django.contrib.auth.models import User, Group
+from rest_framework import generics
+from inventory.serializers import ItemSerializer, LocationSerializer
+
+
+class ItemViewSet(generics.ListAPIView):
+    """
+    foo
+    """
+
+    model = Item
+    serializer_class = ItemSerializer
+
+    def get_queryset(self):
+        queryset = self.model.objects.all()
+
+        return queryset
+
+
+# TODO - fix  all of this!
+
+
+class LocationViewSet(generics.ListAPIView):
+    """
+    """
+    locations = {
+        'room': LocationRoom,
+        'unit': LocationUnit,
+        'shelf': LocationShelf,
+    }
+
+    # model = LocationRoom
+    serializer_class = LocationSerializer
+
+    def get_queryset(self):
+
+        location_type = self.kwargs.get('location_type')
+        location_id = self.kwargs.get('location_id')
+
+        self.model = self.locations.get(location_type)
+
+        if not self.model:
+
+            raise KeyError('This location type does not exist!')
+
+        if location_id:
+
+            queryset = self.model.objects.filter(location_id=location_id)
+
+
+
+        else:
+
+            queryset = self.model.objects.all()
+
+        return queryset
+
+
+
+
+
+
+#
+# class GroupViewSet(viewsets.ModelViewSet):
+#     """
+#     foo
+#     """
+#
+#     queryset = Group.objects.all()
+#     serializer_class = GroupSerializer
