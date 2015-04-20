@@ -1,5 +1,5 @@
 from django.contrib import admin
-from inventory.models import Product, Item
+from inventory.models import Product, Item, LocationRoom, LocationUnit, LocationShelf
 # Register your models here.
 
 
@@ -29,7 +29,7 @@ class ProductAdmin(admin.ModelAdmin):
         'product_number',
     ]
 
-    list_display = ('name', 'quantity', 'items_checked_out')
+    list_display = ('name', 'barcode_id', 'quantity', 'items_checked_out')
 
 
 class ItemAdmin(admin.ModelAdmin):
@@ -47,8 +47,19 @@ class ItemAdmin(admin.ModelAdmin):
     ]
 
 
+class RoomAdmin(admin.ModelAdmin):
+
+    list_display = ('location_id', 'name')
 
 
+class UnitAdmin(admin.ModelAdmin):
+
+    list_display = ('location_id', 'room', 'type', 'temperature')
+
+
+admin.site.register(LocationUnit, UnitAdmin)
+
+admin.site.register(LocationRoom, RoomAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Item, ItemAdmin)
 
