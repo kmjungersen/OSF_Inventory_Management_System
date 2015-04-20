@@ -66,7 +66,6 @@ class Product(models.Model):
 
         return quantity_checked_out
 
-
     @property
     def average_cost(self):
 
@@ -87,9 +86,16 @@ class Product(models.Model):
 
             average_item_cost_raw = 0
 
-        average_item_cost = '{:20,.2f}'.format(average_item_cost_raw)
+        average_item_cost = '${:20,.2f}'.format(average_item_cost_raw)
 
         return average_item_cost
+    #
+    # @property
+    # def formatted_average_cost(self):
+    #
+    #     cost = '${:20,.2f}'.format(self.average_cost)
+    #
+    #     return cost
 
 
 class Item(models.Model):
