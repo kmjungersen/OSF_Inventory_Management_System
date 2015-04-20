@@ -218,9 +218,13 @@ def add_location_form(request, location_type, room=None, unit=None, error_messag
 
             pass
 
+    rooms = LocationRoom.objects.all()
+
     return render(request, 'inventory/add_location_form.html', {
         'location_type': location_type,
         'room': room,
+        'rooms': rooms,
+
         'unit': unit,
         'error_message': error_message,
     })
@@ -261,6 +265,8 @@ class LocationViewSet(generics.ListAPIView):
     serializer_class = LocationSerializer
 
     def get_queryset(self):
+
+        # ipdb.set_trace()
 
         location_type = self.kwargs.get('location_type')
         location_id = self.kwargs.get('location_id')
