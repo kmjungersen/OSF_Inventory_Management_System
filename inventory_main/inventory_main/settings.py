@@ -84,6 +84,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    'inventory/static/inventory',
+]
+
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
 # REST_FRAMEWORK = {
