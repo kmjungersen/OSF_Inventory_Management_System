@@ -20,6 +20,17 @@
 </head>
 <body>
 
+<div class="navbar">
+
+    <ul>
+        <a href="/"><li>Home</li></a>
+        <a href="/inventory"><li>Inventory</li></a>
+        <a href="/admin"><li>Admin</li></a>
+
+    </ul>
+
+</div>
+
     <h2>Inventory</h2>
         <br/>
     <a href="add_product/" class="in_line_link">Add a new product</a>
@@ -49,20 +60,54 @@
                 <div class="panel-body">
 
                 {% if product.quantity == 1  %}
-                There is {{ product.quantity }} item for <a href="view_product/{{ product.barcode_id }}">this product</a>:
+                There is {{ product.quantity }} item for <a href="view_product/{{ product.barcode_id }}">{{ product }}</a>:
 
                 {% elif product.quantity == 0 %}
-                (There are no items for <a href="view_product/{{ product.barcode_id }}">this product</a>)
+                (There are no items for <a href="view_product/{{ product.barcode_id }}">{{ product }}</a>)
 
                 {% elif product.quantity > 1 %}
-                There are {{ product.quantity }} items for <a href="view_product/{{ product.barcode_id }}">this product</a>:
+                There are {{ product.quantity }} items for <a href="view_product/{{ product.barcode_id }}">{{ product }}</a>:
 
                 {% endif %}
 
                 <ul>
-                    {% for item in product.item_set.all %}
-                    <li><a href="view_item/{{ product.barcode_id }}/{{ item.id }}">{{ item }}</a> </li>
-                    {% endfor %}
+{#                    {% for item in product.item_set.all %}#}
+{#                    <li><a href="view_item/{{ product.barcode_id }}/{{ item.id }}">{{ item }}</a> </li>#}
+
+                        <table>
+                            <tr>
+                                <td><b>Item ID</b></td>
+                                <td><b>Lot #</b></td>
+                                <td><b>Checked in?</b></td>
+                                <td><b>Expiration Date</b></td>
+                                <td><b>Cost</b></td>
+                                <td><b>Location</b></td>
+                            </tr>
+                            {% for item in product.item_set.all %}
+                                <a href="view_item/{{ product.barcode_id }}/{{ item.id }}">
+                                <tr>
+
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.lot_number }}</td>
+                                    <td>
+                                        {% if item.checked_in %}
+                                            Checked in
+                                        {% else %}
+                                            Checked out
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ item.expiration_date }}</td>
+                                    <td>{{ item.formatted_cost }}</td>
+                                    <td>Room {{ item.location_room }}, Unit {{ item.location_unit }}, Shelf {{ item.location_shelf }}</td>
+
+                                </tr>
+                                </a>
+
+                            {% endfor %}
+
+                        </table>
+
+{#                    {% endfor %}#}
                 </ul>
 
                 </div>
