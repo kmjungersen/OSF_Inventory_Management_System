@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     url(r'add_item_form/$', views.add_item_form),
 
     url(r'view_product/(?P<barcode_id>\w+)/$', views.view_product, name='view_product'),
-    url(r'view_product/(?P<barcode_id>\w+)/add_item/$', views.add_item_form),
+    url(r'view_product/(?P<barcode_id>\w+)/add_item/$', views.add_item_from_product),
     url(r'view_product/(?P<barcode_id>\w+)/(?P<item_id>\w+)/$', views.view_item),
 
 

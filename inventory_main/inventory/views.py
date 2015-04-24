@@ -112,6 +112,7 @@ def add_item_form(request, barcode_id=None, error_message=None):
         'product': product,
         'error_message': error_message,
         'default_expiration': DEFAULT_EXPIRATION,
+        "barcode_id": barcode_id,
     })
 
 

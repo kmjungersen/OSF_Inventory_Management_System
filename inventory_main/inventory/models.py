@@ -192,6 +192,7 @@ class LocationUnit(models.Model):
     room = models.ForeignKey(LocationRoom)
 
     type = models.CharField(max_length=200)
+    #TOOD remove temp, and merge into type
     temperature = models.CharField(max_length=200, null=True)
 
     @property
