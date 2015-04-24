@@ -122,11 +122,18 @@ def add_item(request, barcode_id):
     cost = request.POST.get('cost')
     expiration_date_str = str(request.POST.get('expiration_date'))
 
+    if expiration_date_str == '':
+
+        expiration_date_str = '2016-4-{days}'.format(
+            days=DEFAULT_EXPIRATION
+        )
+
+    expiration_date = datetime.strptime(expiration_date_str, '%Y-%m-%d')
+
     location_room = request.POST.get('location_room')
     location_unit = request.POST.get('location_unit')
     location_shelf = request.POST.get('location_shelf')
 
-    expiration_date = datetime.strptime(expiration_date_str, '%Y-%m-%d')
 
     product = Product.objects.get(barcode_id__exact=barcode_id)
 
@@ -145,6 +152,11 @@ def add_item(request, barcode_id):
     item_id = item.id
 
     return redirect('view_item', barcode_id=barcode_id, item_id=item_id)
+
+
+def add_item_from_product(request, barcode_id):
+
+    return redirect("add_item_form", barcode_id=barcode_id)
 
 
 def view_product(request, barcode_id):
