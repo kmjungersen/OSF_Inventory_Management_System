@@ -41,28 +41,70 @@ There are no items for this product.
 There are {{ product.quantity }} items for this product:
 
 {% endif %}
+{##}
+{#<ul>#}
+{#    {% for item in product.item_set.all %}#}
+{##}
+{#        <li>#}
+{#            <a href="{{ item.id }}">Lot #: {{ item.lot_number}}</a>#}
+{#            <br/>#}
+{##}
+{#            {% if item.checked_in %}#}
+{#                Checked in#}
+{#            {% else %}#}
+{#                Checked out#}
+{#            {% endif %}#}
+{##}
+{#            <br/>#}
+{#            Expiration Date: {{ item.expiration_date }}#}
+{#            <br/>#}
+{#            Cost: {{ item.formatted_cost }}#}
+{#            <br/>#}
+{#            Location info:#}
+{#            <br/>#}
+{#            <ul>#}
+{#                <li>Room: {{ item.location_room }}</li>#}
+{#                <li>Unit: {{ item.location_unit }}</li>#}
+{#                <li>Shelf: {{ item.location_shelf }}</li>#}
+{#            </ul>#}
+{#        </li>#}
+{#        <br/>#}
+{#    {% endfor %}#}
+{#</ul>#}
 
-<ul>
+<table>
+    <tr>
+        <td><b>Item ID</b></td>
+        <td><b>Lot #</b></td>
+        <td><b>Checked in?</b></td>
+        <td><b>Expiration Date</b></td>
+        <td><b>Cost</b></td>
+        <td><b>Location</b></td>
+    </tr>
     {% for item in product.item_set.all %}
 
-        <li>
-            <a href="{{ item.id }}">Lot #: {{ item.lot_number}}</a>
-            <br/>
-            Expiration Date: {{ item.expiration_date }}
-            <br/>
-            Cost: {{ item.formatted_cost }}
-            <br/>
-            Location info:
-            <br/>
-            <ul>
-                <li>Room: {{ item.location_room }}</li>
-                <li>Unit: {{ item.location_unit }}</li>
-                <li>Shelf: {{ item.location_shelf }}</li>
-            </ul>
-        </li>
-        <br/>
+        <tr>
+
+            <td><a href="{{ item.id }}">{{ item.id }}</a></td>
+            <td>{{ item.lot_number }}</td>
+            <td>
+                {% if item.checked_in %}
+                    Checked in
+                {% else %}
+                    Checked out
+                {% endif %}
+            </td>
+            <td>{{ item.expiration_date }}</td>
+            <td>{{ item.formatted_cost }}</td>
+            <td>Room {{ item.location_room }}, Unit {{ item.location_unit }}, Shelf {{ item.location_shelf }}</td>
+
+        </tr>
+
     {% endfor %}
-</ul>
+
+</table>
+
+
 
 <br/>
 <a href="add_item/">Add an item</a>
