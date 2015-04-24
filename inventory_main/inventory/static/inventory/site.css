@@ -52,6 +52,41 @@ div.panel_heading {
 
 }
 
+td {
+    padding: 10px;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    /*overflow: hidden;*/
+
+}
+
+.navbar li {
+    padding: 10px;
+    display: inline;
+    float: left;
+    background-color: #ecf0f1;
+    border: 5px;
+    border-color: black;
+}
+
+.navbar a {
+    /*display: block;*/
+    /*width: 80px;*/
+    /*height: 40px;*/
+
+
+}
+
+.panel-body table tr a {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
 /*a:link {*/
     /*color: #0066FF;*/
 /*}*/
