@@ -27,7 +27,7 @@
 
     {% if location_type == "room" %}
 
-        <form action="go/">
+        <form action="go/" method="post">
 
         {% csrf_token %}
 
@@ -36,6 +36,8 @@
 
             <b>Room name: </b><input type="text" name="room_name">
             <br/>
+
+            <input type="submit" value="Submit">
 
         </form>
 
@@ -99,7 +101,7 @@
 
 
 
-        <input type="submit" value="Submit">
+
 
     </form>
 

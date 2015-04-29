@@ -37,8 +37,11 @@
         <br/>
     <a href="add_item/" class="in_line_link">Add a new item</a>
         <br/>
-    <a href="view_checked_out_items" class="in_line_link">View checked out items</a>
+    <a href="view_checked_out_items/" class="in_line_link">View checked out items</a>
+        <br/>
+    <a href="add_location/" class="in_line_link">Add a new location</a>
         <br/><br/>
+
 
     <div class="container">
         <div class="panel-group" id="accordion">
@@ -84,8 +87,9 @@
                                 <td><b>Location</b></td>
                             </tr>
                             {% for item in product.item_set.all %}
-                                <a href="view_item/{{ product.barcode_id }}/{{ item.id }}">
-                                <tr>
+{#                                <a href="view_item/{{ product.barcode_id }}/{{ item.id }}">#}
+
+                                <tr class="item_row" onclick="document.location = 'view_item/{{ product.barcode_id }}/{{ item.id }}';">
 
                                     <td>{{ item.id }}</td>
                                     <td>{{ item.lot_number }}</td>
@@ -101,7 +105,7 @@
                                     <td>Room {{ item.location_room }}, Unit {{ item.location_unit }}, Shelf {{ item.location_shelf }}</td>
 
                                 </tr>
-                                </a>
+{#                                </a>#}
 
                             {% endfor %}
 
