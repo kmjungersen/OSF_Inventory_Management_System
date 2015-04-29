@@ -108,8 +108,7 @@ class Item(models.Model):
     item_number = models.BigIntegerField(default=0)
     checked_in = models.BooleanField(default=True)
 
-    default_expiration = timedelta(days=DEFAULT_EXPIRATION) + datetime.now()
-    expiration_date = models.DateField(default=default_expiration)
+    expiration_date = models.DateField()
 
     lot_number = models.BigIntegerField(null=True)
 
@@ -149,12 +148,13 @@ class Item(models.Model):
 
 class LocationRoom(models.Model):
 
-    location_id = models.CharField(max_length=200)
+    room_id = models.CharField(max_length=200)
 
-    name = models.CharField(max_length=200)
+    room_name = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.name
+
+        return self.room_id
 
     @property
     def item_count(self):
@@ -187,13 +187,17 @@ class LocationRoom(models.Model):
 
 class LocationUnit(models.Model):
 
-    location_id = models.CharField(max_length=200)
+    unit_id = models.CharField(max_length=200)
 
     room = models.ForeignKey(LocationRoom)
 
-    type = models.CharField(max_length=200)
+    unit_type = models.CharField(max_length=200)
     #TOOD remove temp, and merge into type
-    temperature = models.CharField(max_length=200, null=True)
+    unit_temperature = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+
+        return self.unit_id
 
     @property
     def item_count(self):
@@ -226,9 +230,13 @@ class LocationUnit(models.Model):
 
 class LocationShelf(models.Model):
 
-    location_id = models.CharField(max_length=200)
+    shelf_id = models.CharField(max_length=200)
 
     unit = models.ForeignKey(LocationUnit)
+
+    def __str__(self):
+
+        return self.shelf_id
 
     @property
     def item_count(self):
