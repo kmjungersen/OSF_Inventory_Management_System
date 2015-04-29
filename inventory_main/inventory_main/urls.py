@@ -25,9 +25,13 @@ urlpatterns = patterns(
 
     # API ROUTES
     url(r'^items/$', views.ItemViewSet.as_view(), name='item_list'),
+
+    url(r'^locations/$', views.LocationViewSet.as_view(), name='location_list_with_type'),
+    url(r'^locations/(?P<room_id>\w+)/$', views.LocationViewSet.as_view(), name='location_list_with_type'),
+
     # url(r'^location/$', views.LocationViewSet.as_view(), name='location_list'),
-    url(r'^location/(?P<location_type>\w+)/$', views.LocationViewSet.as_view(), name='location_list_with_type'),
-    url(r'^location/(?P<location_type>\w+)/(?P<location_id>\w+)/$', views.LocationViewSet.as_view(), name='location_specific'),
+    # url(r'^location/(?P<location_type>\w+)/$', views.LocationViewSet.as_view(), name='location_list_with_type'),
+    # url(r'^location/(?P<location_type>\w+)/(?P<location_id>\w+)/$', views.LocationViewSet.as_view(), name='location_specific'),
 
     url(r'^location/(?P<location_type>\w+)/(?P<location_id>\w+)/children/$', views.LocationViewSet.as_view(), name='location_specific_with_children'),
 
