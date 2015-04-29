@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from inventory.models import Item, LocationRoom
+from inventory.models import Item, LocationRoom, LocationUnit, LocationShelf
 
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -18,13 +18,31 @@ class ItemSerializer(serializers.ModelSerializer):
         # )
 
 
-class LocationSerializer(serializers.ModelSerializer):
+class LocationRoomSerializer(serializers.ModelSerializer):
     """
 
     """
 
     class Meta:
         model = LocationRoom
+
+
+class LocationUnitSerializer(serializers.ModelSerializer):
+    """
+
+    """
+
+    class Meta:
+        model = LocationUnit
+
+
+class LocationShelfSerializer(serializers.ModelSerializer):
+    """
+
+    """
+
+    class Meta:
+        model = LocationShelf
 
 #
 # class GroupSerializer(serializers.ModelSerializer):
