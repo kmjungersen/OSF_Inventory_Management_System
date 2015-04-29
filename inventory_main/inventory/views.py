@@ -268,39 +268,87 @@ class ItemViewSet(generics.ListAPIView):
 class LocationViewSet(generics.ListAPIView):
     """
     """
-    locations = {
-        'room': LocationRoom,
-        'unit': LocationUnit,
-        'shelf': LocationShelf,
+    serializers = {
+        'room': LocationRoomSerializer,
+        'unit': LocationUnitSerializer,
+        'shelf': LocationShelfSerializer,
     }
 
     # model = LocationRoom
-    serializer_class = LocationSerializer
 
     def get_queryset(self):
 
-        # ipdb.set_trace()
+        room_id = self.kwargs.get('room_id')
+        unit_id = self.kwargs.get('unit_id')
+        shelf_id = self.kwargs.get('shelf_id')
 
-        location_type = self.kwargs.get('location_type')
-        location_id = self.kwargs.get('location_id')
+        location_set = []
 
-        self.model = self.locations.get(location_type)
+        if unit_id:
 
-        if not self.model:
+            location_set = self.get_shelf_set(room_id, unit_id)
 
-            raise KeyError('This location type does not exist!')
+        elif room_id:
 
-        if location_id:
-
-            queryset = self.model.objects.filter(location_id=location_id)
-
-
+            location_set = self.get_unit_set(room_id)
 
         else:
 
-            queryset = self.model.objects.all()
+            location_set = self.get_room_set()
 
-        return queryset
+        return location_set
+
+    def get_room_set(self):
+
+        room_set = LocationRoom.objects.all()
+
+        return room_set
+
+    def get_unit_set(self, room_id):
+
+        room_set = self.get_room_set()
+
+        for room in room_set:
+
+            if room.room_id == room_id:
+
+                unit_set = room.locationunit_set.all()
+
+                return unit_set
+
+    def get_shelf_set(self, room_id, unit_id):
+
+        unit_set = self.get_unit_set(room_id)
+
+        for unit in unit_set:
+
+            if unit.unit_id == unit_id:
+
+                shelf_set = unit.locationshelf_set.all()
+
+                return shelf_set
+
+
+
+
+        # location_type = self.kwargs.get('location_type')
+        # location_id = self.kwargs.get('location_id')
+        #
+        # self.model = self.locations.get(location_type)
+        #
+        # if not self.model:
+        #
+        #     raise KeyError('This location type does not exist!')
+        #
+        # if location_id:
+        #
+        #     queryset = self.model.objects.filter(location_id=location_id)
+        #
+        # else:
+        #
+        #     queryset = self.model.objects.all()
+        #
+        # return queryset
 
 
 
