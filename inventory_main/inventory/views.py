@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from datetime import datetime
 
-from inventory.utils import query_upc_database, lookup_item, lookup_product
+from inventory.utils import query_upc_database, lookup_item, lookup_product, add_location_room
 from inventory.models import Product, Item, LocationRoom, LocationUnit, LocationShelf, Distributor
 from inventory.local import *
 
@@ -223,29 +223,46 @@ def checkout(request, barcode_id, item_id, action):
     return redirect('view_item', barcode_id=barcode_id, item_id=item_id)
 
 
-def add_location_form(request, location_type, room=None, unit=None, error_message=None):
-
-    if room:
-
-        if unit:
-
-            pass
+def add_location_form(request, location_type=None, error_message=None):
 
     rooms = LocationRoom.objects.all()
 
     return render(request, 'inventory/add_location_form.html', {
         'location_type': location_type,
-        'room': room,
         'rooms': rooms,
-
-        'unit': unit,
         'error_message': error_message,
     })
 
 
+def add_location(request, location_type):
+
+    utility_switch = {
+        'room': add_location_room,
+    }
+
+    utility = utility_switch.get(location_type)
+
+    utility(request)
+
+    return redirect('index')
+
+
+def location_lookup(request, room_id=None, unit_id=None, shelf_id=None):
+
+    if room_id:
+
+        pass
+
+    else:
+
+        location_list = LocationRoom.objects.all()
+
+    return
+
+
 # from django.contrib.auth.models import User, Group
 from rest_framework import generics
-from inventory.serializers import ItemSerializer, LocationSerializer
+from inventory.serializers import ItemSerializer, LocationRoomSerializer, LocationUnitSerializer, LocationShelfSerializer
 
 
 class ItemViewSet(generics.ListAPIView):
