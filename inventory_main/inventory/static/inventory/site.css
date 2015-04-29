@@ -54,6 +54,8 @@ div.panel_heading {
 
 td {
     padding: 10px;
+    border-color: brown;
+    border: 5px;
 }
 
 .navbar ul {
@@ -73,6 +75,10 @@ td {
     border-color: black;
 }
 
+.navbar li:hover {
+    background-color: #CDD0D1;
+}
+
 .navbar a {
     /*display: block;*/
     /*width: 80px;*/
@@ -85,6 +91,17 @@ td {
     display: block;
     height: 100%;
     width: 100%;
+}
+
+tr.item_row:hover {
+    background-color: #ecf0f1;
+    cursor: pointer;
+
+}
+
+.panel_heading {
+    border: 5px;
+    border-color: black;
 }
 
 /*a:link {*/
