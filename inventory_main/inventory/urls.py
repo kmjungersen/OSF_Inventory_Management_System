@@ -30,7 +30,9 @@ urlpatterns = patterns('',
     url(r'add_item/(?P<barcode_id>\w+)/$', views.add_item_form, name='add_item_form'),
     url(r'add_item/(?P<barcode_id>\w+)/go/$', views.add_item, name='add_item'),
 
-    url(r'add_location/(?P<location_type>\w+)/$', views.add_location_form, name='add_location_initial')
+    url(r'add_location/$', views.add_location_form, name='add_location_initial'),
+    url(r'add_location/(?P<location_type>\w+)/$', views.add_location_form, name='add_location_specific'),
+    url(r'add_location/(?P<location_type>\w+)/go/$', views.add_location, name='add_location'),
 
     # url(r'(?P<form_origin>\w+)/lookup_product/$', views.lookup_product, name='lookup_product'),
 
