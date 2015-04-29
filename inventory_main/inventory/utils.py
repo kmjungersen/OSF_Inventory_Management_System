@@ -3,7 +3,7 @@ __author__ = 'kmjungersen'
 
 from pyscan.main import Barcode
 from functools import wraps
-from inventory.models import Product, Item
+from inventory.models import Product, Item, LocationRoom, LocationUnit, LocationShelf
 import errno
 import os
 import signal
@@ -114,3 +114,49 @@ def lookup_product(barcode_id, new_product=False):
                 return product_name
 
     return None
+
+
+def add_location_room(request):
+
+    room_id = int(request.POST.get('room_id'))
+    room_name = request.POST.get('room_name')
+
+    room = LocationRoom(
+        room_id=room_id,
+        room_name=room_name,
+    )
+
+    room.save()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
