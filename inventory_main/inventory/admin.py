@@ -49,18 +49,24 @@ class ItemAdmin(admin.ModelAdmin):
 
 class RoomAdmin(admin.ModelAdmin):
 
-    list_display = ('location_id', 'name')
+    list_display = ('room_id', 'room_name')
 
 
 class UnitAdmin(admin.ModelAdmin):
 
-    list_display = ('location_id', 'room', 'type', 'temperature')
+    list_display = ('unit_id', 'room', 'unit_type', 'unit_temperature')
 
 
-admin.site.register(LocationUnit, UnitAdmin)
+class ShelfAdmin(admin.ModelAdmin):
+
+    list_display = ('shelf_id', 'unit')
+
 
 admin.site.register(LocationRoom, RoomAdmin)
+admin.site.register(LocationUnit, UnitAdmin)
+admin.site.register(LocationShelf, ShelfAdmin)
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Item, ItemAdmin)
 
-admin.AdminSite.site_header = 'INVENTORY!!!!!  YEAH!!'
+admin.AdminSite.site_header = 'OSF Inventory Management System Administration'
