@@ -1,0 +1,99 @@
+<head>
+    <title>Add Item Form</title>
+
+    <!--#HEADER START#-->
+
+{% load staticfiles %}
+
+<link href="{% static 'inventory/site.css' %}" rel="stylesheet" type="text/css">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/flatly/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="{% static 'inventory/elements.js' %}"></script>
+
+<!--#HEADER FINISH#-->
+
+</head>
+
+<body>
+
+<h1>New Item Form</h1>
+
+{% if error_message %}<p><b>{{ error_message }}</b></p>{% endif %}
+
+{% if first_pass %}
+
+    <form action="lookup/" method="post">
+        {% csrf_token %}
+
+        <b>Please scan your barcode now:</b>
+        <br/>
+
+        Barcode ID: <input type="number" name="barcode_id" autofocus="true">
+        <br/>
+
+        <input type="submit" value="Submit" />
+
+    </form>
+
+{% else %}
+
+    {% if product_found %}
+
+        <form action="go/" method="post">
+        {% csrf_token %}
+
+        <sh>Product Specific Information:</sh>
+        <br/>
+            <b>Name: </b>{{ product.name }}
+            <br/>
+
+            <b>Barcode ID: </b>{{ product.barcode_id }}
+            <br/>
+
+            <b>Description: </b>{{ product.description }}
+            <br/>
+
+            <b>Notes: </b>{{ product.notes }}
+            <br/><br/>
+
+        <sh>Item Specific Information:</sh>
+        <br/>
+
+            <b>Lot Number: </b><input type="number" name="lot_number" autofocus="True">
+            <br/>
+
+            <b>Cost: </b><input type="number" step="any" name="cost">
+            <br/>
+
+            <b>Expiration Date: </b><input type="date" name="expiration_date">
+            <br/><br/>
+
+        <sh>Location: </sh>
+        <br/>
+
+            <b>Room: </b><input type="text" name="location_room">
+            <br/>
+
+            <b>Unit: </b><input type="text" name="location_unit">
+            <br/>
+
+            <b>Shelf: </b><input type="text" name="location_shelf">
+            <br/><br/>
+
+        <input type="submit" value="Submit">
+        </form>
+
+    {% else %}
+
+        There were no products found that match barcode #{{ barcode_id }}.  Please first add it <a href="/inventory/add_product/{{ barcode_id }}">here.</a>
+        <br/>
+
+    {% endif %}
+
+
+
+{% endif %}
+
+</body>

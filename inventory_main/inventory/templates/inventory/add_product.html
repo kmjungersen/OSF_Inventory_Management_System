@@ -1,0 +1,87 @@
+<head>
+    <title>Add Product Form</title>
+
+    <!--#HEADER START#-->
+
+{% load staticfiles %}
+
+<link href="{% static 'inventory/site.css' %}" rel="stylesheet" type="text/css">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/flatly/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="{% static 'inventory/elements.js' %}"></script>
+
+<!--#HEADER FINISH#-->
+
+
+</head>
+<body>
+
+<h1>New Product Form</h1>
+
+{% if error_message %}<p>{{ error_message }}</p>{% endif %}
+
+{% if first_pass %}
+
+    <form action="lookup/" method="post">
+
+        {% csrf_token %}
+
+        <b>Please scan your barcode now:</b>
+        <br/>
+
+        Barcode ID: <input id="barcode_id" type="number" name="barcode_id" autofocus="true">
+        <br/>
+
+        <input type="submit" value="Submit" />
+
+    </form>
+
+{% else %}
+
+    {% if product_found %}
+
+        <h4>This product already exists <a href="/inventory/view_product/{{ barcode_id }}">here:</a></h4>
+        <br/>
+
+        Barcode ID: {{ barcode_id }}
+        <br/>
+
+        Product Name: {{ product_name }}
+        <br/>
+
+        Description: {{ description }}
+        <br/><br/>
+
+        <a href="/inventory/add_item/{{ barcode_id }}">Add an item instead?</a>
+        <br/>
+
+    {% else %}
+
+    <b>Please enter the product information below: </b>
+        <br/>
+
+    <form action="go/" method="post">
+        {% csrf_token %}
+
+        Barcode ID: <input type="number" name="barcode_id" value="{{ barcode_id }}">
+        <br/>
+
+        Product Name: <input type="text" name="product_name" value="{{ product_name }}" autofocus="true">
+        <br/>
+
+        Description: <textarea rows="3" name="description" ></textarea>
+        <br/>
+
+        Notes: <textarea rows="3" name="notes"></textarea>
+        <br/>
+
+        <input type="submit" value="Submit" />
+
+    </form>
+
+    {% endif %}
+
+{% endif %}
+</body>

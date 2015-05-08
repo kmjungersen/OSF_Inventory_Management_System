@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Add Room</title>
+
+    <!--#HEADER START#-->
+{% load staticfiles %}
+
+<link href="{% static 'inventory/site.css' %}" rel="stylesheet" type="text/css">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/flatly/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="{% static 'inventory/elements.js' %}"></script>
+
+
+    <!--#HEADER END#-->
+
+</head>
+<body>
+
+    <h2>Add New Location - {{ location_type }}</h2>
+    <br/>
+
+
+
+    {% if location_type == "room" %}
+
+        <form action="go/" method="post">
+
+        {% csrf_token %}
+
+            <b>Room number: </b><input type="text" name="room_id" autofocus="True">
+            <br/>
+
+            <b>Room name: </b><input type="text" name="room_name">
+            <br/>
+
+            <input type="submit" value="Submit">
+
+        </form>
+
+    {% elif location_type == "unit" %}
+
+        <form action="lookup">
+
+            <b>Room: </b>
+                <select name="room" class="room">
+{#                    {% for room in rooms %}#}
+{##}
+{#                        <option value="{{ room }}">{{ room }}</option>#}
+{##}
+{#                    {% endfor %}#}
+
+
+
+                </select>
+            <br/>
+
+            <b>Unit number: </b><input type="text" name="unit_number" autofocus="True">
+            <br/>
+
+            <b>Unit Type: </b><input type="text" name="unit_type">
+            <br/>
+
+            <b>Unit Temperature: </b><input type="text" name="unit_temperature">
+            <br/>
+
+        {% elif location_type == "shelf" %}
+
+            <b>Room: </b>
+                <select name="room" class="room">
+                    {% for room in rooms %}
+
+                        <option value="{{ room }}">{{ room }}</option>
+
+                    {% endfor %}
+                </select>
+            <br/>
+            <b>Unit: </b>
+            <select name="unit" class="unit">
+
+
+            </select>
+            <script>
+                $(".room").change(
+
+                )
+
+                function get_rooms() {
+                    $.getJSON('http://localhost:8000/location/room')
+                }
+            </script>
+
+            <br/>
+            <b>Shelf Number: </b><input type="text" name="shelf_number">
+
+        {% endif %}
+        
+
+
+
+
+
+    </form>
+
+</body>
+</html>

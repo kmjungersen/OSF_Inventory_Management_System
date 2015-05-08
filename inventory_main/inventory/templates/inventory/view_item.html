@@ -1,0 +1,78 @@
+<head>
+    <title>View Item</title>
+
+    <!--#HEADER START#-->
+
+{% load staticfiles %}
+
+<link href="{% static 'inventory/site.css' %}" rel="stylesheet" type="text/css">
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/flatly/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="{% static 'inventory/elements.js' %}"></script>
+
+<!--#HEADER FINISH#-->
+
+</head>
+<body>
+
+    <h2>{{ item }}</h2>
+    <br/>
+
+    {% if item.checked_in %}
+
+        <sh>This item is currently checked in.</sh>
+        <br/>
+        <a href="checkout/">Check-out this item</a>
+
+    {% else %}
+
+        <sh>This item is currently checked out.</sh>
+        <br/>
+        <a href="checkin/">Check-in this item</a>
+
+    {% endif %}
+
+    <br/><br/>
+
+    <sh>Product Specific Information:</sh>
+    <br/>
+
+        <b>Barcode ID: </b>{{ item.product.barcode_id }}
+        <br/>
+
+        <b>Description: </b>{{ item.product.description }}
+        <br/>
+
+        <b>Notes: </b>{{ item.product.notes }}
+        <br/><br/>
+
+    <sh>Item Specific Information:</sh>
+    <br/>
+
+        <b>Lot #: </b>{{ item.lot_number }}
+        <br/>
+
+        <b>Expiration Date: </b>{{ item.expiration_date }}
+        <br/>
+
+        <b>Cost: </b>{{ item.formatted_cost }}
+        <br/><br/>
+
+    <sh>Location:</sh>
+    <br/>
+
+        <b>Room: </b>{{ item.location_room }}
+        <br/>
+
+        <b>Unit: </b>{{ item.location_unit }}
+        <br/>
+
+        <b>Shelf: </b>{{ item.location_shelf }}
+        <br/><br/>
+
+    <a href="javascript:history.back()">Go Back</a>
+        <br/>
+
+</body>

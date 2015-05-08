@@ -1,0 +1,117 @@
+<head>
+    <title>View Product</title>
+
+    <!--#HEADER START#-->
+
+{% load staticfiles %}
+
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/flatly/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="{% static 'inventory/site.css' %}" rel="stylesheet" type="text/css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="{% static 'inventory/elements.js' %}"></script>
+
+<!--#HEADER FINISH#-->
+
+
+</head>
+<body>
+<h2>{{ product.name }}</h2>
+
+<b>Barcode ID: </b>{{ product.barcode_id }}
+<br/>
+
+<b>Description: </b>{{ product.description }}
+<br/>
+
+<b>Notes: </b>{{ product.notes }}
+<br/>
+
+<b>Average Cost: </b>{{ product.average_cost }}
+<br/><br/>
+
+{% if product.quantity == 1  %}
+There is {{ product.quantity }} item for this product:
+
+{% elif product.quantity == 0 %}
+There are no items for this product.
+
+{% elif product.quantity > 1 %}
+There are {{ product.quantity }} items for this product:
+
+{% endif %}
+{##}
+{#<ul>#}
+{#    {% for item in product.item_set.all %}#}
+{##}
+{#        <li>#}
+{#            <a href="{{ item.id }}">Lot #: {{ item.lot_number}}</a>#}
+{#            <br/>#}
+{##}
+{#            {% if item.checked_in %}#}
+{#                Checked in#}
+{#            {% else %}#}
+{#                Checked out#}
+{#            {% endif %}#}
+{##}
+{#            <br/>#}
+{#            Expiration Date: {{ item.expiration_date }}#}
+{#            <br/>#}
+{#            Cost: {{ item.formatted_cost }}#}
+{#            <br/>#}
+{#            Location info:#}
+{#            <br/>#}
+{#            <ul>#}
+{#                <li>Room: {{ item.location_room }}</li>#}
+{#                <li>Unit: {{ item.location_unit }}</li>#}
+{#                <li>Shelf: {{ item.location_shelf }}</li>#}
+{#            </ul>#}
+{#        </li>#}
+{#        <br/>#}
+{#    {% endfor %}#}
+{#</ul>#}
+
+<table>
+    <tr>
+        <td><b>Item ID</b></td>
+        <td><b>Lot #</b></td>
+        <td><b>Checked in?</b></td>
+        <td><b>Expiration Date</b></td>
+        <td><b>Cost</b></td>
+        <td><b>Location</b></td>
+    </tr>
+    {% for item in product.item_set.all %}
+
+        <tr>
+
+            <td><a href="{{ item.id }}">{{ item.id }}</a></td>
+            <td>{{ item.lot_number }}</td>
+            <td>
+                {% if item.checked_in %}
+                    Checked in
+                {% else %}
+                    Checked out
+                {% endif %}
+            </td>
+            <td>{{ item.expiration_date }}</td>
+            <td>{{ item.formatted_cost }}</td>
+            <td>Room {{ item.location_room }}, Unit {{ item.location_unit }}, Shelf {{ item.location_shelf }}</td>
+
+        </tr>
+
+    {% endfor %}
+
+</table>
+
+
+
+<br/>
+<a href="add_item/">Add an item</a>
+
+    <br/><br/>
+    <a href="javascript:history.back()">Go Back</a>
+    <br/>
+
+</body>
+

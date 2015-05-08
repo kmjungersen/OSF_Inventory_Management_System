@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Inventory</title>
+
+    <!--#HEADER START#-->
+
+{% load staticfiles %}
+
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/flatly/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="{% static 'inventory/site.css' %}" rel="stylesheet" type="text/css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="{% static 'inventory/elements.js' %}"></script>
+
+<!--#HEADER FINISH#-->
+
+</head>
+<body>
+
+<div class="navbar">
+
+    <ul>
+        <a href="/"><li>Home</li></a>
+        <a href="/inventory"><li>Inventory</li></a>
+        <a href="/admin"><li>Admin</li></a>
+
+    </ul>
+
+</div>
+
+    <h2>Inventory</h2>
+        <br/>
+    <a href="add_product/" class="in_line_link">Add a new product</a>
+        <br/>
+    <a href="add_item/" class="in_line_link">Add a new item</a>
+        <br/>
+    <a href="view_checked_out_items/" class="in_line_link">View checked out items</a>
+        <br/>
+    <a href="add_location/" class="in_line_link">Add a new location</a>
+        <br/><br/>
+
+
+    <div class="container">
+        <div class="panel-group" id="accordion">
+
+    {% for product in products %}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#{{ product.id }}">
+                        {{ product }}<br/>({{ product.quantity }} item(s))
+                    </a>
+                </h4>
+
+            </div>
+
+            <div id="{{ product.id }}" class="panel-collapse collapse">
+                <div class="panel-body">
+
+                {% if product.quantity == 1  %}
+                There is {{ product.quantity }} item for <a href="view_product/{{ product.barcode_id }}">{{ product }}</a>:
+
+                {% elif product.quantity == 0 %}
+                (There are no items for <a href="view_product/{{ product.barcode_id }}">{{ product }}</a>)
+
+                {% elif product.quantity > 1 %}
+                There are {{ product.quantity }} items for <a href="view_product/{{ product.barcode_id }}">{{ product }}</a>:
+
+                {% endif %}
+
+                <ul>
+{#                    {% for item in product.item_set.all %}#}
+{#                    <li><a href="view_item/{{ product.barcode_id }}/{{ item.id }}">{{ item }}</a> </li>#}
+
+                        <table>
+                            <tr>
+                                <td><b>Item ID</b></td>
+                                <td><b>Lot #</b></td>
+                                <td><b>Checked in?</b></td>
+                                <td><b>Expiration Date</b></td>
+                                <td><b>Cost</b></td>
+                                <td><b>Location</b></td>
+                            </tr>
+                            {% for item in product.item_set.all %}
+{#                                <a href="view_item/{{ product.barcode_id }}/{{ item.id }}">#}
+
+                                <tr class="item_row" onclick="document.location = 'view_item/{{ product.barcode_id }}/{{ item.id }}';">
+
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.lot_number }}</td>
+                                    <td>
+                                        {% if item.checked_in %}
+                                            Checked in
+                                        {% else %}
+                                            Checked out
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ item.expiration_date }}</td>
+                                    <td>{{ item.formatted_cost }}</td>
+                                    <td>Room {{ item.location_room }}, Unit {{ item.location_unit }}, Shelf {{ item.location_shelf }}</td>
+
+                                </tr>
+{#                                </a>#}
+
+                            {% endfor %}
+
+                        </table>
+
+{#                    {% endfor %}#}
+                </ul>
+
+                </div>
+            </div>
+
+    {% endfor %}
+
+    </div>
+    </div>
+    </div>
+</body>
+</html>

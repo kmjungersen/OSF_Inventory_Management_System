@@ -1,0 +1,130 @@
+    /* Body and structure
+-------------------------------------------------- */
+
+html, body {
+}
+
+body {
+    padding-top: 30px; /* body padding for fixed top nav */
+    position: relative; /* for bootstrap affix */
+    padding-left: 30px;
+    line-height: 150%;
+    vertical-align: top;
+    margin-left: auto;
+}
+
+form {
+    vertical-align: top;
+    /*line-height: 200%;*/
+    margin-bottom: 40px;
+    margin-top: 20px;
+
+}
+
+input:not([type="submit"]) {
+    border-radius: 5px;
+    padding: 3px;
+    margin-bottom: 20px;
+}
+
+textarea {
+    border-radius: 5px;
+    padding: 3px;
+    margin-bottom: 20px;
+}
+
+sh {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.container {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+a.in_line_link {
+    line-height: 200%;
+}
+
+div.panel_heading {
+    border-bottom: solid;
+
+}
+
+td {
+    padding: 10px;
+    border-color: brown;
+    border: 5px;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    /*overflow: hidden;*/
+
+}
+
+.navbar li {
+    padding: 10px;
+    display: inline;
+    float: left;
+    background-color: #ecf0f1;
+    border: 5px;
+    border-color: black;
+}
+
+.navbar li:hover {
+    background-color: #CDD0D1;
+}
+
+.navbar a {
+    /*display: block;*/
+    /*width: 80px;*/
+    /*height: 40px;*/
+
+
+}
+
+.panel-body table tr a {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+tr.item_row:hover {
+    background-color: #ecf0f1;
+    cursor: pointer;
+
+}
+
+.panel_heading {
+    border: 5px;
+    border-color: black;
+}
+
+/*a:link {*/
+    /*color: #0066FF;*/
+/*}*/
+
+/*a:visited {*/
+    /*color: #0066FF;*/
+/*}*/
+
+/*a:hover {*/
+    /*color: #FF5050;*/
+ /*}*/
+
+/*input.ditto {*/
+    /*margin-bottom: 20px;*/
+/*}*/
+
+/*textarea.ditto {*/
+    /*margin-bottom: 20px;*/
+/*}*/
+
+/*input[type="submit"] {*/
+    /*padding-top: 100px;*/
+    /*padding-bottom: 10px;*/
+/*}*/
